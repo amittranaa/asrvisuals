@@ -1,0 +1,70 @@
+{
+  "version": 2,
+  "buildCommand": "next build",
+  "devCommand": "next dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "projectSettings": {
+    "sourceFilesOutsideRootDirectory": true
+  },
+  "env": [
+    {
+      "key": "NEXT_PUBLIC_API_URL",
+      "description": "Backend API base URL",
+      "value": "https://your-backend-api.vercel.app/api",
+      "type": "string"
+    },
+    {
+      "key": "NEXT_PUBLIC_STRIPE_KEY",
+      "description": "Stripe public key for payments",
+      "value": "pk_live_your_stripe_key",
+      "type": "string"
+    },
+    {
+      "key": "NEXT_PUBLIC_CALENDLY_URL",
+      "description": "Calendly booking URL",
+      "value": "https://cal.com/asrvisuals",
+      "type": "string"
+    }
+  ],
+  "buildOutputDirectory": ".next",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/:path*",
+      "headers": [
+        {
+          "key": "x-content-type-options",
+          "value": "nosniff"
+        },
+        {
+          "key": "x-frame-options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "x-xss-protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "referrer-policy",
+          "value": "origin-when-cross-origin"
+        },
+        {
+          "key": "permissions-policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "/api/robots"
+    }
+  ]
+}

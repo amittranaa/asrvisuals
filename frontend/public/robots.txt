@@ -1,0 +1,20 @@
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Block private pages if needed
+Disallow: /admin
+Disallow: /api
+Disallow: /private
+
+# Sitemap location
+Sitemap: https://asrvisuals.com/sitemap.xml
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0

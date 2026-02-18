@@ -1,0 +1,33 @@
+/.DS_Store
+.DS_Store
+
+# Node dependencies
+**/node_modules/
+
+# Next.js build output
+**/.next/
+**/out/
+
+# Build output
+**/dist/
+**/build/
+
+# Logs
+**/npm-debug.log
+**/yarn-error.log
+**/pnpm-debug.log
+
+# Env files
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Vercel
+**/.vercel/
+
+# IDE
+**/.vscode/
+**/.idea/
+**/*.swp
+**/*.swo
+
