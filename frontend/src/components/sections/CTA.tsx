@@ -5,7 +5,23 @@ import Button from '@/components/ui/Button'
 import Link from 'next/link'
 import { CalendarIcon } from '@heroicons/react/24/outline'
 
-const CTA = () => {
+type CTAContent = {
+  heading: string
+  description: string
+  primaryCta: { label: string; href: string }
+  secondaryCta: { label: string; href: string }
+  trustItems: string[]
+}
+
+const defaultContent: CTAContent = {
+  heading: 'Start Generating Customers for Your Business',
+  description: "Book a free strategy call and we'll design a 90-day customer acquisition roadmap for your business.",
+  primaryCta: { label: 'Book Your Free Strategy Call', href: 'https://cal.com/asrvisuals' },
+  secondaryCta: { label: 'Or Email Us for Custom Inquiry', href: '/contact' },
+  trustItems: ['No commitment', '30-min call', 'Actionable roadmap', '90-day plan']
+}
+
+const CTA = ({ content = defaultContent }: { content?: CTAContent }) => {
   return (
     <section className="py-20 sm:py-24 bg-bg-primary relative overflow-hidden">
       {/* Background Gradient */}
@@ -30,23 +46,22 @@ const CTA = () => {
         >
           {/* Main Heading */}
           <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
-            Start Generating Customers for Your Business
+            {content.heading}
           </h2>
           
           <p className="text-xl text-text-secondary mb-8">
-            Book a free strategy call and we'll design a 90-day customer acquisition 
-            roadmap for your business.
+            {content.description}
           </p>
 
           {/* CTA Button */}
-          <Button variant="primary" size="large" href="https://cal.com/asrvisuals" className="inline-flex items-center gap-2">
+          <Button variant="primary" size="large" href={content.primaryCta.href} className="inline-flex items-center gap-2">
             <CalendarIcon className="w-5 h-5" />
-            Book Your Free Strategy Call
+            {content.primaryCta.label}
           </Button>
 
           {/* Trust Indicators */}
           <div className="mt-12 flex flex-wrap justify-center gap-8">
-            {['No commitment', '30-min call', 'Actionable roadmap', '90-day plan'].map((item, index) => (
+            {content.trustItems.map((item, index) => (
               <div key={index} className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-brand-red rounded-full" />
                 <span className="text-text-secondary text-sm">{item}</span>
@@ -56,8 +71,8 @@ const CTA = () => {
 
           {/* Secondary CTA */}
           <div className="mt-10">
-            <Link href="/contact" className="inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-bold border-2 border-brand-red text-brand-red hover:bg-brand-red hover:text-white transition-all duration-300 rounded-md">
-              Or Email Us for Custom Inquiry
+            <Link href={content.secondaryCta.href} className="inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-bold border-2 border-brand-red text-brand-red hover:bg-brand-red hover:text-white transition-all duration-300 rounded-md">
+              {content.secondaryCta.label}
             </Link>
           </div>
         </motion.div>

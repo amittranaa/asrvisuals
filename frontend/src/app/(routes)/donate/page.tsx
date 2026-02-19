@@ -4,11 +4,18 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Heart, Copy, CheckCircle } from 'lucide-react'
 import Button from '@/components/ui/Button'
+import { useContentBlock } from '@/lib/useContentBlock'
 
 export default function DonatePage() {
   const [copiedUPI, setCopiedUPI] = useState(false)
+  const content = useContentBlock('page.donate', {
+    title: 'Support ASR Visuals',
+    description: 'Your generous donations help us continue creating amazing content and improving our services. Every contribution, no matter the size, makes a difference!',
+    upiId: 'asrvisuals@ptaxis',
+    stripeUrl: 'https://buy.stripe.com/your-payment-link'
+  })
 
-  const upiID = 'asrvisuals@ptaxis'
+  const upiID = content.upiId
 
   const handleCopyUPI = () => {
     navigator.clipboard.writeText(upiID)
@@ -17,8 +24,7 @@ export default function DonatePage() {
   }
 
   const handleStripePayment = () => {
-    // Implement Stripe Checkout integration
-    window.open('https://buy.stripe.com/your-payment-link', '_blank')
+    window.open(content.stripeUrl, '_blank')
   }
 
   return (
@@ -42,11 +48,10 @@ export default function DonatePage() {
             <Heart className="w-10 h-10 text-accent" fill="currentColor" />
           </div>
           <h1 className="heading-lg text-text-primary mb-6">
-            Support ASR Visuals
+            {content.title}
           </h1>
           <p className="text-xl text-text-secondary leading-relaxed">
-            Your generous donations help us continue creating amazing content and improving our services. 
-            Every contribution, no matter the size, makes a difference!
+            {content.description}
           </p>
         </motion.div>
 

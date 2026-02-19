@@ -3,7 +3,40 @@
 import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 
-const Hero = () => {
+type HeroContent = {
+  badge: string
+  titleLine1: string
+  titleLine2: string
+  subtitle: string
+  primaryCta: { label: string; href: string }
+  secondaryCta: { label: string; href: string }
+  indicatorNumber: string
+  indicatorLabel: string
+}
+
+const defaultContent: HeroContent = {
+  badge: 'Available for work',
+  titleLine1: 'We Build Revenue Engines',
+  titleLine2: 'Using Content, Ads, and Automation',
+  subtitle: 'We help businesses scale revenue through strategic content, high-performance video editing, and data-driven advertising systems.',
+  primaryCta: { label: 'Book a Strategy Call', href: 'https://cal.com/asrvisuals' },
+  secondaryCta: { label: 'View Our Work', href: '#portfolio' },
+  indicatorNumber: '(01)',
+  indicatorLabel: 'VS.'
+}
+
+const Hero = ({ content = defaultContent }: { content?: HeroContent }) => {
+  const {
+    badge,
+    titleLine1,
+    titleLine2,
+    subtitle,
+    primaryCta,
+    secondaryCta,
+    indicatorNumber,
+    indicatorLabel
+  } = content
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg-primary">
       {/* Subtle Grid Background */}
@@ -36,16 +69,16 @@ const Hero = () => {
             className="inline-flex items-center gap-2 bg-bg-secondary border border-border-divider px-4 py-2 rounded-lg mb-8"
           >
             <span className="w-2 h-2 bg-brand-red rounded-full animate-pulse" />
-            <span className="text-sm text-text-secondary">Available for work</span>
+            <span className="text-sm text-text-secondary">{badge}</span>
           </motion.div>
 
           {/* Main Headline */}
           <h1 className="mb-6">
             <span className="block text-4xl sm:text-5xl md:text-7xl font-bold text-text-primary">
-              We Build Revenue Engines
+              {titleLine1}
             </span>
             <span className="block text-3xl sm:text-4xl md:text-6xl font-bold text-brand-red mt-2">
-              Using Content, Ads, and Automation
+              {titleLine2}
             </span>
           </h1>
 
@@ -56,8 +89,7 @@ const Hero = () => {
             transition={{ delay: 0.4 }}
             className="text-lg sm:text-xl text-text-secondary max-w-2xl mx-auto mb-8"
           >
-            We help businesses scale revenue through strategic content, high-performance video editing, 
-            and data-driven advertising systems.
+            {subtitle}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -67,11 +99,11 @@ const Hero = () => {
             transition={{ delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-6 sm:mb-12"
           >
-            <Button variant="primary" size="large" href="https://cal.com/asrvisuals">
-              Book a Strategy Call
+            <Button variant="primary" size="large" href={primaryCta.href}>
+              {primaryCta.label}
             </Button>
-            <Button variant="outline" size="large" href="#portfolio">
-              View Our Work
+            <Button variant="outline" size="large" href={secondaryCta.href}>
+              {secondaryCta.label}
             </Button>
           </motion.div>
 
@@ -82,9 +114,9 @@ const Hero = () => {
             transition={{ delay: 1 }}
             className="mt-6 sm:mt-10 flex items-center justify-center gap-2"
           >
-            <span className="text-brand-red font-mono text-sm">(01)</span>
+            <span className="text-brand-red font-mono text-sm">{indicatorNumber}</span>
             <div className="w-12 h-[1px] bg-border-divider" />
-            <span className="text-text-secondary text-sm">VS.</span>
+            <span className="text-text-secondary text-sm">{indicatorLabel}</span>
           </motion.div>
         </motion.div>
       </div>

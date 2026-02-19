@@ -1,7 +1,5 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import Button from '@/components/ui/Button'
 import { CalendarIcon, ClockIcon, UserIcon, TagIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { getBlogPostSchema, getBreadcrumbSchema } from '@/lib/schema'
 
@@ -254,8 +252,46 @@ const blogPosts: Record<string, any> = {
   }
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = blogPosts[params.slug]
+const getApiPost = async (slug: string) => {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL
+  if (!baseUrl) {
+    return null
+  }
+
+  try {
+    const response = await fetch(`${baseUrl}/blog/slug/${encodeURIComponent(slug)}`, {
+      next: { revalidate: 60 }
+    })
+    if (!response.ok) {
+      return null
+    }
+    const json = await response.json()
+    if (!json?.data) {
+      return null
+    }
+
+    return {
+      title: json.data.title,
+      author: json.data.author || 'ASR Visuals',
+      date: json.data.date || new Date(json.data.createdAt || Date.now()).toLocaleDateString('en-US', {
+        month: 'short',
+        day: '2-digit',
+        year: 'numeric'
+      }),
+      readTime: json.data.readTime || '5 min read',
+      category: json.data.category || 'General',
+      slug: json.data.slug,
+      tags: json.data.tags || [],
+      content: json.data.content
+    }
+  } catch {
+    return null
+  }
+}
+
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const apiPost = await getApiPost(params.slug)
+  const post = apiPost || blogPosts[params.slug]
 
   if (!post) {
     return (
@@ -263,8 +299,11 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         <div className="container-custom max-w-2xl text-center">
           <h1 className="text-4xl font-bold text-text-primary mb-4">Post Not Found</h1>
           <p className="text-text-secondary mb-8">Sorry, we couldn't find that blog post.</p>
-          <Link href="/blog">
-            <Button variant="primary">Back to Blog</Button>
+          <Link
+            href="/blog"
+            className="inline-flex items-center justify-center rounded-md bg-brand-red px-6 py-3 text-base font-semibold text-white transition-all duration-300 hover:bg-brand-red-hover hover:-translate-y-1 hover:shadow-red-glow"
+          >
+            Back to Blog
           </Link>
         </div>
       </div>
@@ -301,23 +340,15 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       <article className="py-12 sm:py-20 bg-bg-primary">
         <div className="container-custom max-w-3xl">
           {/* Breadcrumb */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="mb-8 flex items-center gap-2"
-          >
+          <div className="mb-8 flex items-center gap-2">
             <Link href="/blog" className="inline-flex items-center gap-1 text-brand-red hover:text-brand-red-hover transition-colors">
               <ArrowLeftIcon className="w-4 h-4" />
               Back to Blog
             </Link>
-          </motion.div>
+          </div>
 
           {/* Header */}
-          <motion.header
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8"
-          >
+          <header className="mb-8">
             <span className="inline-block px-3 py-1 rounded-lg bg-bg-secondary border border-border-divider text-brand-red text-xs font-semibold mb-4">
               {post.category}
             </span>
@@ -338,24 +369,16 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 {post.readTime}
               </div>
             </div>
-          </motion.header>
+          </header>
 
           {/* Content */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
+          <div
             className="max-w-none mb-12 prose-light"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
 
           {/* Tags */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="border-t border-border-divider pt-8 mb-8"
-          >
+          <div className="border-t border-border-divider pt-8 mb-8">
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag: string) => (
                 <span key={tag} className="inline-block px-3 py-1 rounded-lg bg-bg-secondary border border-border-divider text-text-secondary text-xs">
@@ -363,20 +386,20 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 </span>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="bg-bg-secondary border border-border-divider rounded-lg p-8 text-center"
-          >
+          <div className="bg-bg-secondary border border-border-divider rounded-lg p-8 text-center">
             <h3 className="text-2xl font-bold text-text-primary mb-4">Ready to transform your content?</h3>
-            <Button variant="primary" size="large" href="https://cal.com/asrvisuals">
+            <Link
+              href="https://cal.com/asrvisuals"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-md bg-brand-red px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:bg-brand-red-hover hover:-translate-y-1 hover:shadow-red-glow"
+            >
               Book a Free Strategy Call
-            </Button>
-          </motion.div>
+            </Link>
+          </div>
         </div>
       </article>
 

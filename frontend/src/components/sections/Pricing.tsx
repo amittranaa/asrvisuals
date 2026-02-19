@@ -50,7 +50,34 @@ const plans = [
   }
 ]
 
-const Pricing = () => {
+type PricingPlan = {
+  name: string
+  price: number | null
+  description: string
+  features: string[]
+  popular?: boolean
+  custom?: boolean
+  paymentUrl?: string
+}
+
+type PricingContent = {
+  heading: string
+  intro: string
+  plans: PricingPlan[]
+}
+
+const defaultContent: PricingContent = {
+  heading: 'Simple Plans',
+  intro: "Whether you're uploading weekly or scaling fast, we've got a plan tailored to your content flow.",
+  plans: plans as PricingPlan[]
+}
+
+const Pricing = ({ content = defaultContent }: { content?: PricingContent }) => {
+  const activePlans = content.plans.length ? content.plans : defaultContent.plans
+  const defaultFeatureMap = new Map(
+    defaultContent.plans.map((plan) => [plan.name.toLowerCase(), plan.features])
+  )
+
   return (
     <section className="py-20 sm:py-24 bg-bg-primary relative overflow-hidden">
       <div className="orb -top-24 -right-20 w-72 h-72 bg-brand-red/15" />
@@ -65,16 +92,15 @@ const Pricing = () => {
           className="text-center mb-16"
         >
           <span className="section-tag">Pricing</span>
-          <h2 className="mb-4">Simple Plans</h2>
+          <h2 className="mb-4">{content.heading}</h2>
           <p className="text-text-secondary max-w-2xl mx-auto">
-            Whether you're uploading weekly or scaling fast, we've got a plan 
-            tailored to your content flow.
+            {content.intro}
           </p>
         </motion.div>
 
         {/* Pricing Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {plans.map((plan, index) => (
+          {activePlans.map((plan, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -109,7 +135,10 @@ const Pricing = () => {
 
                 <div className="flex-grow">
                   <ul className="space-y-3 mb-8">
-                    {plan.features.map((feature, featureIndex) => (
+                    {(plan.features?.length
+                      ? plan.features
+                      : defaultFeatureMap.get(plan.name.toLowerCase()) || []
+                    ).map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-start gap-3">
                         <CheckIcon className="w-5 h-5 text-brand-red flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-text-primary">{feature}</span>
@@ -121,7 +150,7 @@ const Pricing = () => {
                 <Button
                   variant={plan.popular ? 'primary' : 'outline'}
                   fullWidth
-                  href={plan.custom ? '/contact' : '/checkout'}
+                  href={plan.paymentUrl || (plan.custom ? '/contact' : '/contact')}
                   className="btn-bounce"
                 >
                   {plan.custom ? 'Contact Us' : 'Choose Plan'}

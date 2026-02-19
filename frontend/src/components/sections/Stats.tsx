@@ -10,6 +10,14 @@ const stats = [
   { value: 4.9, label: 'Stars Rating', suffix: '' },
 ]
 
+type StatsContent = {
+  items: typeof stats
+}
+
+const defaultContent: StatsContent = {
+  items: stats
+}
+
 const Counter = ({ end, suffix = '', duration = 2000 }: { end: number; suffix?: string; duration?: number }) => {
   const [count, setCount] = useState(0)
   const ref = useRef(null)
@@ -54,12 +62,14 @@ const Counter = ({ end, suffix = '', duration = 2000 }: { end: number; suffix?: 
   )
 }
 
-const Stats = () => {
+const Stats = ({ content = defaultContent }: { content?: StatsContent }) => {
+  const items = content.items.length ? content.items : defaultContent.items
+
   return (
     <section className="py-14 sm:py-16 bg-bg-primary border-y border-border-divider">
       <div className="container-custom">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map((stat, index) => (
+          {items.map((stat, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}

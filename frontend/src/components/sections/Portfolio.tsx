@@ -59,13 +59,30 @@ const projects = [
 
 const categories = ['All', 'Tech Review', 'Tutorial', 'Travel', 'Gaming']
 
-const Portfolio = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All')
+type PortfolioContent = {
+  heading: string
+  intro: string
+  categories: string[]
+  projects: typeof projects
+}
+
+const defaultContent: PortfolioContent = {
+  heading: 'Our Best Work',
+  intro: "From tech reviews to gameplay breakdowns — here's a glimpse of how we turn raw footage into binge-worthy content that resonates.",
+  categories,
+  projects
+}
+
+const Portfolio = ({ content = defaultContent }: { content?: PortfolioContent }) => {
+  const [selectedCategory, setSelectedCategory] = useState(content.categories?.[0] || 'All')
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
 
+  const activeProjects = content.projects?.length ? content.projects : defaultContent.projects
+  const activeCategories = content.categories?.length ? content.categories : defaultContent.categories
+
   const filteredProjects = selectedCategory === 'All' 
-    ? projects 
-    : projects.filter(p => p.category === selectedCategory)
+    ? activeProjects 
+    : activeProjects.filter(p => p.category === selectedCategory)
 
   return (
     <section id="portfolio" className="py-20 sm:py-24 bg-bg-secondary">
@@ -79,10 +96,9 @@ const Portfolio = () => {
           className="text-center mb-12"
         >
           <span className="section-tag">Portfolio</span>
-          <h2 className="mb-4">Our Best Work</h2>
+          <h2 className="mb-4">{content.heading}</h2>
           <p className="text-text-secondary max-w-2xl mx-auto">
-            From tech reviews to gameplay breakdowns — here's a glimpse of how we turn raw footage 
-            into binge-worthy content that resonates.
+            {content.intro}
           </p>
         </motion.div>
 
@@ -94,7 +110,7 @@ const Portfolio = () => {
           viewport={{ once: true }}
           className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12"
         >
-          {categories.map((category) => (
+          {activeCategories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}

@@ -11,6 +11,9 @@ import bookingRoutes from './routes/bookingRoutes'
 import paymentRoutes from './routes/paymentRoutes'
 import contactRoutes from './routes/contactRoutes'
 import blogRoutes from './routes/blogRoutes'
+import pricingRoutes from './routes/pricingRoutes'
+import contentRoutes from './routes/contentRoutes'
+import userRoutes from './routes/userRoutes'
 
 dotenv.config()
 
@@ -37,11 +40,20 @@ app.use(helmet({
     preload: true,
   },
 }))
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  process.env.ADMIN_APP_URL,
+  'http://localhost:3000',
+  'http://localhost:5173'
+]
+  .filter(Boolean)
+  .flatMap(origin => origin!.split(',').map(value => value.trim()))
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: allowedOrigins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Setup-Key'],
 }))
 app.use(morgan('dev'))
 app.use(express.json({ limit: '10mb' })) // Limit payload size
@@ -53,6 +65,9 @@ app.use('/api/bookings', bookingRoutes)
 app.use('/api/payments', paymentRoutes)
 app.use('/api/contact', contactRoutes)
 app.use('/api/blog', blogRoutes)
+app.use('/api/pricing', pricingRoutes)
+app.use('/api/content', contentRoutes)
+app.use('/api/users', userRoutes)
 
 // Health check
 app.get('/health', (req, res) => {

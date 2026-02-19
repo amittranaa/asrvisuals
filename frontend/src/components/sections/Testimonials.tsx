@@ -43,11 +43,27 @@ const testimonials = [
   }
 ]
 
-const Testimonials = () => {
+type TestimonialsContent = {
+  label: string
+  heading: string
+  subheading: string
+  items: typeof testimonials
+}
+
+const defaultContent: TestimonialsContent = {
+  label: '(03)',
+  heading: 'Testimonials',
+  subheading: 'Hear from those who trust us',
+  items: testimonials
+}
+
+const Testimonials = ({ content = defaultContent }: { content?: TestimonialsContent }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState(0)
   const [visibleCount, setVisibleCount] = useState(3)
   const containerRef = useRef<HTMLDivElement>(null)
+
+  const activeItems = content.items.length ? content.items : defaultContent.items
 
   useEffect(() => {
     const updateVisibleCount = () => {
@@ -66,7 +82,7 @@ const Testimonials = () => {
   }, [])
 
   const nextSlide = () => {
-    if (currentIndex + visibleCount < testimonials.length) {
+    if (currentIndex + visibleCount < activeItems.length) {
       setDirection(1)
       setCurrentIndex(prev => prev + 1)
     }
@@ -100,9 +116,9 @@ const Testimonials = () => {
           className="flex items-center justify-between mb-12"
         >
           <div>
-            <span className="text-brand-red font-mono text-sm">(03)</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-text-primary mt-2">Testimonials</h2>
-            <p className="text-text-secondary text-xl mt-2">Hear from those who trust us</p>
+            <span className="text-brand-red font-mono text-sm">{content.label}</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-text-primary mt-2">{content.heading}</h2>
+            <p className="text-text-secondary text-xl mt-2">{content.subheading}</p>
           </div>
           
           {/* Navigation Arrows */}
@@ -135,7 +151,7 @@ const Testimonials = () => {
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="flex"
           >
-            {testimonials.map((testimonial, index) => (
+            {activeItems.map((testimonial, index) => (
               <div
                 key={index}
                 className="flex-shrink-0 px-3"
@@ -169,7 +185,7 @@ const Testimonials = () => {
 
         {/* Dots Indicator */}
         <div className="flex justify-center gap-2 mt-8">
-          {Array.from({ length: testimonials.length - visibleCount + 1 }).map((_, index) => (
+          {Array.from({ length: activeItems.length - visibleCount + 1 }).map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}

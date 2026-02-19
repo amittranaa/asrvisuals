@@ -9,6 +9,16 @@ import {
   ArrowPathIcon 
 } from '@heroicons/react/24/outline'
 
+type ServicesContent = {
+  heading: string
+  intro: string
+  items: {
+    title: string
+    description: string
+    tags: string[]
+  }[]
+}
+
 const services = [
   {
     title: 'Youtube Shorts Editing',
@@ -36,7 +46,21 @@ const services = [
   }
 ]
 
-const Services = () => {
+const serviceIcons = [FilmIcon, DocumentTextIcon, PhotoIcon, ArrowPathIcon]
+
+const defaultContent: ServicesContent = {
+  heading: 'What We Do Best',
+  intro: 'We craft scroll-stopping edits that keep your audience hooked and your content looking top-tier.',
+  items: services.map((service) => ({
+    title: service.title,
+    description: service.description,
+    tags: service.tags
+  }))
+}
+
+const Services = ({ content = defaultContent }: { content?: ServicesContent }) => {
+  const items = content.items.length ? content.items : defaultContent.items
+
   return (
     <section className="py-20 sm:py-24 bg-bg-secondary">
       <div className="container-custom">
@@ -49,16 +73,15 @@ const Services = () => {
           className="text-center mb-16"
         >
           <span className="section-tag">Services</span>
-          <h2 className="mb-4">What We Do Best</h2>
+          <h2 className="mb-4">{content.heading}</h2>
           <p className="text-text-secondary max-w-2xl mx-auto">
-            We craft scroll-stopping edits that keep your audience hooked 
-            and your content looking top-tier.
+            {content.intro}
           </p>
         </motion.div>
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-          {services.map((service, index) => (
+          {items.map((service, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -70,7 +93,10 @@ const Services = () => {
                 {/* Card Header with Icon */}
                 <div className="flex items-start gap-4 mb-4">
                   <div className="p-3 bg-brand-red/10 rounded-lg">
-                    <service.icon className="w-6 h-6 text-brand-red" />
+                    {(() => {
+                      const Icon = serviceIcons[index % serviceIcons.length]
+                      return <Icon className="w-6 h-6 text-brand-red" />
+                    })()}
                   </div>
                   <h3 className="text-xl font-bold text-text-primary">{service.title}</h3>
                 </div>

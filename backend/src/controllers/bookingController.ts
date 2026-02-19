@@ -16,8 +16,10 @@ export const createBooking = async (req: Request, res: Response) => {
       status: 'pending'
     })
 
-    // Send confirmation email
-    await sendBookingConfirmation(req.user.email, booking)
+    const userEmail = (req as any).user?.email
+    if (userEmail) {
+      await sendBookingConfirmation(userEmail, booking)
+    }
 
     res.status(201).json({
       success: true,

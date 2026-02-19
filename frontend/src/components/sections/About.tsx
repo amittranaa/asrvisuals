@@ -2,14 +2,42 @@
 
 import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
-import { CheckBadgeIcon } from '@heroicons/react/24/solid'
 
-const About = () => {
-  const achievements = [
+type AboutContent = {
+  heading: string
+  description: string
+  achievements: { icon: string; text: string }[]
+  stats: { value: string; label: string }[]
+  ctaLabel: string
+  ctaHref: string
+  videoUrl: string
+}
+
+const defaultAchievements = [
     { icon: '🎥', text: '10+ years in industry' },
     { icon: '⚡', text: 'Fast Delivery' },
     { icon: '⭐', text: 'Top Rated on Fiverr' },
   ]
+
+const defaultStats = [
+  { value: '500+', label: 'Videos' },
+  { value: '100+', label: 'Creators' },
+  { value: '50M+', label: 'Views' }
+]
+
+const defaultContent: AboutContent = {
+  heading: "We're the Editing Partners Behind the Creators Who Actually Grow with Results.",
+  description: 'Fast, Reliable and Obsessed with delivering scroll-stopping content that keeps your audience hooked and your channel growing.',
+  achievements: defaultAchievements,
+  stats: defaultStats,
+  ctaLabel: 'Learn More About Us',
+  ctaHref: '/about',
+  videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
+}
+
+const About = ({ content = defaultContent }: { content?: AboutContent }) => {
+  const achievements = content.achievements || defaultAchievements
+  const stats = content.stats || defaultStats
 
   return (
     <section id="about" className="py-20 sm:py-24 bg-bg-primary">
@@ -24,11 +52,10 @@ const About = () => {
           >
             <span className="section-tag">About</span>
             <h2 className="mb-6">
-              We're the Editing Partners Behind the Creators Who Actually Grow with Results.
+              {content.heading}
             </h2>
             <p className="text-text-secondary text-base sm:text-lg mb-8">
-              Fast, Reliable and Obsessed with delivering scroll-stopping content 
-              that keeps your audience hooked and your channel growing.
+              {content.description}
             </p>
 
             {/* Achievement Tags */}
@@ -49,22 +76,16 @@ const About = () => {
 
             {/* Stats Preview */}
             <div className="grid grid-cols-3 gap-4 mb-8">
-              <div className="bg-bg-secondary border border-border-divider p-4 rounded-lg text-center">
-                <div className="text-2xl font-bold text-brand-red">500+</div>
-                <div className="text-xs text-text-secondary">Videos</div>
-              </div>
-              <div className="bg-bg-secondary border border-border-divider p-4 rounded-lg text-center">
-                <div className="text-2xl font-bold text-brand-red">100+</div>
-                <div className="text-xs text-text-secondary">Creators</div>
-              </div>
-              <div className="bg-bg-secondary border border-border-divider p-4 rounded-lg text-center">
-                <div className="text-2xl font-bold text-brand-red">50M+</div>
-                <div className="text-xs text-text-secondary">Views</div>
-              </div>
+              {stats.map((stat, index) => (
+                <div key={index} className="bg-bg-secondary border border-border-divider p-4 rounded-lg text-center">
+                  <div className="text-2xl font-bold text-brand-red">{stat.value}</div>
+                  <div className="text-xs text-text-secondary">{stat.label}</div>
+                </div>
+              ))}
             </div>
 
-            <Button variant="primary" href="/about">
-              Learn More About Us
+            <Button variant="primary" href={content.ctaHref}>
+              {content.ctaLabel}
             </Button>
           </motion.div>
 
@@ -79,7 +100,7 @@ const About = () => {
             <div className="relative aspect-square rounded-lg overflow-hidden bg-bg-secondary border border-border-divider">
               {/* Add your YouTube video URL here */}
               <iframe
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3"
+                src={content.videoUrl}
                 title="About ASR Visuals"
                 className="absolute inset-0 w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

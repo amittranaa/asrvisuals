@@ -27,8 +27,23 @@ const faqs = [
   }
 ]
 
-const FAQ = () => {
+type FAQContent = {
+  label: string
+  heading: string
+  subheading: string
+  items: typeof faqs
+}
+
+const defaultContent: FAQContent = {
+  label: '(04)',
+  heading: 'FAQs',
+  subheading: 'Answering your questions',
+  items: faqs
+}
+
+const FAQ = ({ content = defaultContent }: { content?: FAQContent }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const items = content.items.length ? content.items : defaultContent.items
 
   return (
     <section className="py-20 sm:py-24 bg-bg-primary">
@@ -41,14 +56,14 @@ const FAQ = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="text-brand-red font-mono text-sm">(04)</span>
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mt-2 mb-4">FAQs</h2>
-          <p className="text-text-secondary text-xl">Answering your questions</p>
+          <span className="text-brand-red font-mono text-sm">{content.label}</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mt-2 mb-4">{content.heading}</h2>
+          <p className="text-text-secondary text-xl">{content.subheading}</p>
         </motion.div>
 
         {/* FAQ Items */}
         <div className="space-y-4">
-          {faqs.map((faq, index) => (
+          {items.map((faq, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}

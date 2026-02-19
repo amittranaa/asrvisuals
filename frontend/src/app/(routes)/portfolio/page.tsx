@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Play, Eye } from 'lucide-react'
+import { useContentBlock } from '@/lib/useContentBlock'
 
 const portfolioProjects = [
   {
@@ -64,13 +65,31 @@ const portfolioProjects = [
 
 const categories = ['All', 'Long-form Edit', 'Short-form Content', 'Documentary Style', 'Educational Content', 'Paid Advertising', 'Event Coverage']
 
+type PortfolioPageContent = {
+  title: string
+  description: string
+  categories: string[]
+  projects: typeof portfolioProjects
+}
+
+const defaultContent: PortfolioPageContent = {
+  title: 'Our Best Work',
+  description: 'Explore our portfolio of stunning video edits that have helped creators and brands achieve millions of views and engage their audiences.',
+  categories,
+  projects: portfolioProjects
+}
+
 export default function PortfolioPage() {
-  const [selectedCategory, setSelectedCategory] = useState('All')
+  const content = useContentBlock('page.portfolio', defaultContent)
+  const [selectedCategory, setSelectedCategory] = useState(content.categories?.[0] || 'All')
   const [selectedVideo, setSelectedVideo] = useState<number | null>(null)
 
+  const activeProjects = content.projects?.length ? content.projects : portfolioProjects
+  const activeCategories = content.categories?.length ? content.categories : categories
+
   const filteredProjects = selectedCategory === 'All' 
-    ? portfolioProjects 
-    : portfolioProjects.filter(p => p.category === selectedCategory)
+    ? activeProjects 
+    : activeProjects.filter(p => p.category === selectedCategory)
 
   return (
     <div className="min-h-screen bg-bg-secondary py-24">
@@ -93,11 +112,10 @@ export default function PortfolioPage() {
             Portfolio
           </span>
           <h1 className="text-4xl sm:text-5xl font-bold text-text-primary mb-6">
-            Our Best Work
+            {content.title}
           </h1>
           <p className="text-xl text-text-secondary leading-relaxed">
-            Explore our portfolio of stunning video edits that have helped creators and brands 
-            achieve millions of views and engage their audiences.
+            {content.description}
           </p>
         </motion.div>
 
@@ -108,7 +126,7 @@ export default function PortfolioPage() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-12 flex flex-wrap gap-3"
         >
-          {categories.map((category) => (
+          {activeCategories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
@@ -135,7 +153,7 @@ export default function PortfolioPage() {
               onClick={() => setSelectedVideo(project.id)}
             >
               {/* Video Thumbnail */}
-              className="relative aspect-video bg-gradient-to-br from-brand-red/20 to-brand-red/5 overflow-hidden">
+              <div className="relative aspect-video bg-gradient-to-br from-brand-red/20 to-brand-red/5 overflow-hidden">
                 {project.videoUrl ? (
                   <iframe
                     src={project.videoUrl}

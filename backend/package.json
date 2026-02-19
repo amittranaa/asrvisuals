@@ -7,8 +7,11 @@
     "dev": "nodemon src/app.ts",
     "build": "tsc",
     "start": "node dist/app.js",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "seed:content": "ts-node src/scripts/seedContentBlocks.ts",
+    "seed:pricing": "ts-node src/scripts/seedPricingPlans.ts"
   },
+  
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",

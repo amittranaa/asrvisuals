@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import { CalendarIcon, ClockIcon } from '@heroicons/react/24/outline'
+import { useContentBlock } from '@/lib/useContentBlock'
 
 const allPosts = [
   {
@@ -69,13 +70,77 @@ const allPosts = [
   },
 ]
 
-const categories = ['All', ...new Set(allPosts.map(p => p.category))]
+type BlogPageContent = {
+  title: string
+  highlight: string
+  description: string
+  posts: typeof allPosts
+}
+
+const defaultContent: BlogPageContent = {
+  title: 'Content',
+  highlight: 'Creation',
+  description: 'Learn professional video editing, YouTube growth strategies, content creation techniques, and creator psychology from industry experts.',
+  posts: allPosts
+}
+
+const categories = ['All', ...allPosts.reduce((acc, post) => {
+  if (acc.includes(post.category)) {
+    return acc
+  }
+
+  return [...acc, post.category]
+}, [] as string[])]
 
 export default function BlogPage() {
+  const content = useContentBlock('page.blog', defaultContent)
+  const [apiPosts, setApiPosts] = useState(allPosts)
+  const posts = content.posts?.length ? content.posts : apiPosts
+  const categories = ['All', ...posts.reduce((acc, post) => {
+    if (acc.includes(post.category)) {
+      return acc
+    }
+    return [...acc, post.category]
+  }, [] as string[])]
+
   const [selectedCategory, setSelectedCategory] = useState('All')
   const filteredPosts = selectedCategory === 'All' 
-    ? allPosts 
-    : allPosts.filter(p => p.category === selectedCategory)
+    ? posts 
+    : posts.filter(p => p.category === selectedCategory)
+
+  useEffect(() => {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL
+    if (!baseUrl) return
+
+    const load = async () => {
+      try {
+        const response = await fetch(`${baseUrl}/blog`)
+        if (!response.ok) return
+        const json = await response.json()
+        if (Array.isArray(json.data) && json.data.length) {
+          const normalized = json.data.map((post: any) => ({
+            title: post.title,
+            excerpt: post.excerpt,
+            author: post.author || 'ASR Visuals',
+            date: post.date || new Date(post.createdAt || Date.now()).toLocaleDateString('en-US', {
+              month: 'short',
+              day: '2-digit',
+              year: 'numeric'
+            }),
+            readTime: post.readTime || '5 min read',
+            category: post.category || 'General',
+            slug: post.slug,
+            tags: post.tags || []
+          }))
+          setApiPosts(normalized)
+        }
+      } catch {
+        // ignore
+      }
+    }
+
+    load()
+  }, [])
 
   return (
     <>
@@ -89,10 +154,10 @@ export default function BlogPage() {
           >
             <span className="section-tag">Blog</span>
             <h1 className="mt-4 text-5xl md:text-6xl font-bold text-text-primary mb-6">
-              Content <span className="text-brand-red">Creation</span> Insights
+              {content.title} <span className="text-brand-red">{content.highlight}</span> Insights
             </h1>
             <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8">
-              Learn professional video editing, YouTube growth strategies, content creation techniques, and creator psychology from industry experts.
+              {content.description}
             </p>
           </motion.div>
         </div>

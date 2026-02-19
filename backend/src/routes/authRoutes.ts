@@ -1,7 +1,9 @@
 import { Router } from 'express'
+import { login, setupAdmin } from '../controllers/authController'
 
 const router = Router()
 
-// TODO: Add auth routes
+router.post('/setup-admin', setupAdmin)
+router.post('/login', login)
 
 export default router

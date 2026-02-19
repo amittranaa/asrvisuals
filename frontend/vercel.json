@@ -7,29 +7,6 @@
   "projectSettings": {
     "sourceFilesOutsideRootDirectory": true
   },
-  "env": [
-    {
-      "key": "NEXT_PUBLIC_API_URL",
-      "description": "Backend API base URL",
-      "value": "https://your-backend-api.vercel.app/api",
-      "type": "string"
-    },
-    {
-      "key": "NEXT_PUBLIC_STRIPE_KEY",
-      "description": "Stripe public key for payments",
-      "value": "pk_live_your_stripe_key",
-      "type": "string"
-    },
-    {
-      "key": "NEXT_PUBLIC_CALENDLY_URL",
-      "description": "Calendly booking URL",
-      "value": "https://cal.com/asrvisuals",
-      "type": "string"
-    }
-  ],
-  "buildOutputDirectory": ".next",
-  "cleanUrls": true,
-  "trailingSlash": false,
   "headers": [
     {
       "source": "/:path*",

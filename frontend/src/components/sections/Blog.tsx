@@ -87,7 +87,21 @@ const posts = [
   }
 ]
 
-const Blog = () => {
+type BlogContent = {
+  heading: string
+  intro: string
+  posts: typeof posts
+}
+
+const defaultContent: BlogContent = {
+  heading: 'Creator Insights & Tips',
+  intro: 'Stay ahead of the game with fresh insights on editing trends, YouTube growth strategies.',
+  posts
+}
+
+const Blog = ({ content = defaultContent }: { content?: BlogContent }) => {
+  const items = content.posts.length ? content.posts : defaultContent.posts
+
   return (
     <section id="blog" className="py-20 sm:py-24 bg-bg-primary">
       <div className="container-custom">
@@ -100,15 +114,15 @@ const Blog = () => {
           className="text-center mb-12"
         >
           <span className="section-tag">Blog</span>
-          <h2 className="mb-4">Creator Insights & Tips</h2>
+          <h2 className="mb-4">{content.heading}</h2>
           <p className="text-text-secondary max-w-2xl mx-auto">
-            Stay ahead of the game with fresh insights on editing trends, YouTube growth strategies.
+            {content.intro}
           </p>
         </motion.div>
 
         {/* Blog Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {posts.map((post, index) => (
+          {items.map((post, index) => (
             <motion.article
               key={index}
               initial={{ opacity: 0, y: 30 }}
