@@ -8,27 +8,47 @@ type FAQPageContent = {
 
 const defaultContent: FAQPageContent = {
   title: 'FAQs',
-  description: 'Answers to the most common questions about working with ASR Visuals.',
+  description: 'Clear, quick answers about our video editing services, process, and timelines.',
   items: [
     {
       q: 'What does ASR Visuals do?',
-      a: 'We provide premium video editing, content strategy, and performance-focused creative for growing brands.'
+      a: 'We provide professional video editing, content strategy, and performance-focused creative for YouTube, short-form, and marketing content.'
+    },
+    {
+      q: 'What services do you offer?',
+      a: 'We handle short-form edits, long-form edits, thumbnails, and content repurposing. We also help with content planning and optimization.'
     },
     {
       q: 'What is your typical turnaround time?',
-      a: 'Most edits are delivered within 48-72 hours, depending on scope and volume.'
+      a: 'Most edits are delivered in 48 to 72 hours, depending on complexity and volume. Rush options are available when schedules allow.'
     },
     {
-      q: 'Do you handle revisions?',
-      a: 'Yes, revisions are included in all plans. We keep feedback simple and fast.'
+      q: 'How many revisions are included?',
+      a: 'Each plan includes a set number of revision rounds. We recommend sending consolidated feedback to keep turnaround fast.'
     },
     {
-      q: 'Can you work with existing brand assets?',
-      a: 'Absolutely. We follow your brand guidelines and maintain consistency across content.'
+      q: 'Can you match my style and brand?',
+      a: 'Yes. We follow your brand guidelines, fonts, colors, and pacing style to keep everything consistent.'
+    },
+    {
+      q: 'Do you work with YouTube Shorts, Reels, and TikTok?',
+      a: 'Yes. We edit vertical short-form content with hooks, captions, and pacing optimized for retention.'
+    },
+    {
+      q: 'What do you need from me to start?',
+      a: 'We need your raw footage, brand assets (logo, colors, fonts), references, and any specific instructions for tone or style.'
+    },
+    {
+      q: 'Will I own the final videos?',
+      a: 'Yes. You own your footage and receive full usage rights to the final deliverables after payment.'
+    },
+    {
+      q: 'Can you handle ongoing weekly edits?',
+      a: 'Absolutely. We offer monthly plans for creators and teams who need consistent output and predictable turnaround.'
     },
     {
       q: 'How do we get started?',
-      a: 'Book a call and we will map out your content goals and workflow.'
+      a: 'Book a call or send a message. We will review your goals, recommend a plan, and outline the next steps.'
     }
   ]
 }

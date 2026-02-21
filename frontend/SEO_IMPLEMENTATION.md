@@ -295,9 +295,9 @@ curl http://localhost:3000/sitemap.xml
 
 After deploying to production:
 1. Visit https://search.google.com/search-console
-2. Add property: https://asrvisuals.com
+2. Add property: https://asrvisuals.live
 3. Verify ownership (via DNS or HTML file)
-4. Submit sitemap: https://asrvisuals.com/sitemap.xml
+4. Submit sitemap: https://asrvisuals.live/sitemap.xml
 5. Check coverage report
 6. Monitor Performance report monthly
 

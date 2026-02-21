@@ -8,7 +8,7 @@ Disallow: /api
 Disallow: /private
 
 # Sitemap location
-Sitemap: https://asrvisuals.com/sitemap.xml
+Sitemap: https://asrvisuals.live/sitemap.xml
 
 # Specific bot rules
 User-agent: Googlebot

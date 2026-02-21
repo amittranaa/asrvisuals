@@ -30,7 +30,7 @@ const Footer = () => {
       { name: 'Donate', href: '/donate' },
     ],
     social: [
-      { name: 'X', icon: 'X', href: 'https://x.com' },
+      { name: 'X', icon: 'X', href: 'https://x.com/VisualsAsr83268' },
       { name: 'Instagram', icon: InstagramIcon, href: 'https://instagram.com/asr_visuals_' },
     ]
   }

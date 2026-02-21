@@ -6,7 +6,17 @@ import { motion } from 'framer-motion'
 import { Play, Eye } from 'lucide-react'
 import { useContentBlock } from '@/lib/useContentBlock'
 
-const portfolioProjects = [
+type PortfolioProject = {
+  id: number
+  title: string
+  category: string
+  videoUrl?: string
+  thumbnail: string
+  description: string
+  stats: { views: string; engagement: string }
+}
+
+const portfolioProjects: PortfolioProject[] = [
   {
     id: 1,
     title: 'Product Launch Campaign',
@@ -69,7 +79,18 @@ type PortfolioPageContent = {
   title: string
   description: string
   categories: string[]
-  projects: typeof portfolioProjects
+  projects: PortfolioProject[]
+}
+
+type PortfolioVideoItem = {
+  videoUrl?: string
+  mode?: 'auto' | 'manual'
+}
+
+type PortfolioVideosContent = {
+  videoMode?: 'auto' | 'manual'
+  maxResults?: number
+  items?: PortfolioVideoItem[]
 }
 
 const defaultContent: PortfolioPageContent = {
@@ -81,15 +102,25 @@ const defaultContent: PortfolioPageContent = {
 
 export default function PortfolioPage() {
   const content = useContentBlock('page.portfolio', defaultContent)
+  const videoContent = useContentBlock<PortfolioVideosContent>('portfolio.videos', {
+    videoMode: 'auto',
+    maxResults: 6,
+    items: []
+  })
   const [selectedCategory, setSelectedCategory] = useState(content.categories?.[0] || 'All')
   const [selectedVideo, setSelectedVideo] = useState<number | null>(null)
 
   const activeProjects = content.projects?.length ? content.projects : portfolioProjects
   const activeCategories = content.categories?.length ? content.categories : categories
+  const videoOverrides = videoContent.items || []
+  const projectsWithVideos = activeProjects.map((project, index) => ({
+    ...project,
+    videoUrl: videoOverrides[index]?.videoUrl || project.videoUrl
+  }))
 
   const filteredProjects = selectedCategory === 'All' 
-    ? activeProjects 
-    : activeProjects.filter(p => p.category === selectedCategory)
+    ? projectsWithVideos 
+    : projectsWithVideos.filter(p => p.category === selectedCategory)
 
   return (
     <div className="min-h-screen bg-bg-secondary py-24">

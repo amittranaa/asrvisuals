@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { getToken } from './lib/auth'
 import LoginPage from './pages/Login'
@@ -10,7 +11,7 @@ import UsersPage from './pages/Users'
 import BlogPage from './pages/Blog'
 import ContentPage from './pages/Content'
 
-const RequireAuth = ({ children }: { children: JSX.Element }) => {
+const RequireAuth = ({ children }: { children: ReactNode }) => {
   const token = getToken()
   return token ? children : <Navigate to="/login" replace />
 }

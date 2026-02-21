@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import BlogPost from '../models/BlogPost'
+import { generateBlogCoverImage } from '../utils/imageGenerator'
 
 export const getBlogPosts = async (_req: Request, res: Response) => {
 	try {
@@ -61,5 +62,40 @@ export const deleteBlogPost = async (req: Request, res: Response) => {
 		res.status(200).json({ success: true, message: 'Blog post deleted' })
 	} catch (error) {
 		res.status(500).json({ success: false, message: 'Error deleting blog post' })
+	}
+}
+
+export const generateBlogCoverImageController = async (req: Request, res: Response) => {
+	try {
+		const { title, slug, category } = req.body
+
+		// Validate required fields
+		if (!title || !slug || !category) {
+			return res.status(400).json({
+				success: false,
+				message: 'Missing required fields: title, slug, category'
+			})
+		}
+
+		// Generate image using Gemini AI
+		const result = await generateBlogCoverImage({
+			title,
+			slug,
+			category
+		})
+
+		res.status(200).json({
+			success: true,
+			data: {
+				imageUrl: result.imageUrl,
+				generatedAt: result.generatedAt
+			}
+		})
+	} catch (error) {
+		console.error('Error in generateBlogCoverImageController:', error)
+		res.status(500).json({
+			success: false,
+			message: 'Error generating blog cover image'
+		})
 	}
 }

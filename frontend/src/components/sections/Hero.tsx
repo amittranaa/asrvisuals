@@ -17,7 +17,7 @@ type HeroContent = {
 const defaultContent: HeroContent = {
   badge: 'Available for work',
   titleLine1: 'We Build Revenue Engines',
-  titleLine2: 'Using Content, Ads, and Automation',
+  titleLine2: 'With Content, Ads, and Automation That Convert',
   subtitle: 'We help businesses scale revenue through strategic content, high-performance video editing, and data-driven advertising systems.',
   primaryCta: { label: 'Book a Strategy Call', href: 'https://cal.com/asrvisuals' },
   secondaryCta: { label: 'View Our Work', href: '#portfolio' },

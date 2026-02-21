@@ -10,7 +10,7 @@ const contentBlocks = [
     data: {
       badge: 'Available for work',
       titleLine1: 'We Build Revenue Engines',
-      titleLine2: 'Using Content, Ads, and Automation',
+      titleLine2: 'With Content, Ads, and Automation That Convert',
       subtitle: 'We help businesses scale revenue through strategic content, high-performance video editing, and data-driven advertising systems.',
       primaryCta: { label: 'Book a Strategy Call', href: 'https://cal.com/asrvisuals' },
       secondaryCta: { label: 'View Our Work', href: '#portfolio' },
@@ -35,7 +35,8 @@ const contentBlocks = [
       ],
       ctaLabel: 'Learn More About Us',
       ctaHref: '/about',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
+      videoMode: 'auto',
+      videoUrl: 'https://www.youtube.com/embed/OctCccn7XuY?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
     }
   },
   {
@@ -151,6 +152,27 @@ const contentBlocks = [
           category: 'Gaming',
           image: '/images/project-6.jpg',
           tags: ['Gaming', 'Highlights']
+        }
+      ]
+    }
+  },
+  {
+    key: 'portfolio.videos',
+    data: {
+      videoMode: 'manual',
+      maxResults: 3,
+      items: [
+        {
+          mode: 'manual',
+          videoUrl: 'https://www.youtube.com/embed/OctCccn7XuY?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
+        },
+        {
+          mode: 'manual',
+          videoUrl: ''
+        },
+        {
+          mode: 'manual',
+          videoUrl: ''
         }
       ]
     }
@@ -389,15 +411,47 @@ const contentBlocks = [
     key: 'page.faq',
     data: {
       title: 'FAQs',
-      description: 'Answers to the most common questions about working with ASR Visuals.',
+      description: 'Clear, quick answers about our video editing services, process, and timelines.',
       items: [
         {
           q: 'What does ASR Visuals do?',
-          a: 'We provide premium video editing, content strategy, and performance-focused creative for growing brands.'
+          a: 'We provide professional video editing, content strategy, and performance-focused creative for YouTube, short-form, and marketing content.'
+        },
+        {
+          q: 'What services do you offer?',
+          a: 'We handle short-form edits, long-form edits, thumbnails, and content repurposing. We also help with content planning and optimization.'
         },
         {
           q: 'What is your typical turnaround time?',
-          a: 'Most edits are delivered within 48-72 hours, depending on scope and volume.'
+          a: 'Most edits are delivered in 48 to 72 hours, depending on complexity and volume. Rush options are available when schedules allow.'
+        },
+        {
+          q: 'How many revisions are included?',
+          a: 'Each plan includes a set number of revision rounds. We recommend sending consolidated feedback to keep turnaround fast.'
+        },
+        {
+          q: 'Can you match my style and brand?',
+          a: 'Yes. We follow your brand guidelines, fonts, colors, and pacing style to keep everything consistent.'
+        },
+        {
+          q: 'Do you work with YouTube Shorts, Reels, and TikTok?',
+          a: 'Yes. We edit vertical short-form content with hooks, captions, and pacing optimized for retention.'
+        },
+        {
+          q: 'What do you need from me to start?',
+          a: 'We need your raw footage, brand assets (logo, colors, fonts), references, and any specific instructions for tone or style.'
+        },
+        {
+          q: 'Will I own the final videos?',
+          a: 'Yes. You own your footage and receive full usage rights to the final deliverables after payment.'
+        },
+        {
+          q: 'Can you handle ongoing weekly edits?',
+          a: 'Absolutely. We offer monthly plans for creators and teams who need consistent output and predictable turnaround.'
+        },
+        {
+          q: 'How do we get started?',
+          a: 'Book a call or send a message. We will review your goals, recommend a plan, and outline the next steps.'
         }
       ]
     }
@@ -424,19 +478,43 @@ const contentBlocks = [
     key: 'page.privacy',
     data: {
       title: 'Privacy Policy',
-      description: 'We respect your privacy. This policy explains what data we collect and how we use it.',
+      description: 'We respect your privacy. This policy explains what we collect, how we use it, and how we keep your data safe.',
       sections: [
         {
           title: 'Information we collect',
-          text: 'We may collect contact details, project information, and communication history when you reach out to us or book a call.'
+          text: 'We collect the information you choose to share, such as your name, email, business details, project goals, and uploaded assets. We also collect basic technical data like browser type and device information.'
         },
         {
           title: 'How we use information',
-          text: 'We use your information to respond to inquiries, deliver services, and improve our operations. We do not sell your data.'
+          text: 'We use your information to respond to inquiries, deliver video editing services, manage projects, send updates, and improve our website and customer experience. We do not sell your personal data.'
+        },
+        {
+          title: 'Legal basis',
+          text: 'We process data to perform a contract, comply with legal obligations, and pursue legitimate business interests such as service improvement and security.'
+        },
+        {
+          title: 'Sharing and disclosure',
+          text: 'We may share data with trusted service providers (such as hosting, analytics, or payment processors) only as needed to operate our services. These providers are required to protect your information.'
+        },
+        {
+          title: 'Cookies and analytics',
+          text: 'We use cookies to keep the site working and to understand how visitors use our pages. You can manage cookies in your browser settings.'
         },
         {
           title: 'Data retention',
-          text: 'We keep data only as long as necessary to provide services or meet legal requirements.'
+          text: 'We keep data only as long as needed to deliver services, meet legal requirements, or resolve disputes. You may request deletion where legally permitted.'
+        },
+        {
+          title: 'Security',
+          text: 'We use reasonable technical and organizational measures to protect your information. However, no system can be guaranteed 100% secure.'
+        },
+        {
+          title: 'Your rights',
+          text: 'You can request access, correction, or deletion of your personal data. To make a request, contact us using the email below.'
+        },
+        {
+          title: 'Children’s privacy',
+          text: 'Our services are intended for adults and businesses. We do not knowingly collect data from children under 13.'
         }
       ],
       contactEmail: 'asrvisualshelpline@gmail.com'
@@ -446,19 +524,47 @@ const contentBlocks = [
     key: 'page.terms',
     data: {
       title: 'Terms of Service',
-      description: 'These terms govern your use of the ASR Visuals website and services.',
+      description: 'These terms explain how our video editing and content services work, what you can expect from us, and what we need from you.',
       sections: [
         {
-          title: 'Services',
-          text: 'We provide video editing and content services based on the scope agreed during onboarding or a signed proposal.'
+          title: 'Services and scope',
+          text: 'We provide video editing, content production, and related creative services as described in your plan, proposal, or written agreement. Deliverables, formats, and turnaround targets are defined per project.'
         },
         {
-          title: 'Payments',
-          text: 'Payment terms are outlined per plan or proposal. Work begins after payment confirmation unless stated otherwise.'
+          title: 'Onboarding and assets',
+          text: 'You agree to provide footage, brand assets, references, and instructions needed to complete the work. Delays in providing assets may impact timelines.'
         },
         {
-          title: 'Revisions',
-          text: 'Revisions are included per plan. Additional revisions may be billed separately.'
+          title: 'Timelines and delivery',
+          text: 'We aim to meet the agreed turnaround times. Timelines are estimates and may shift due to scope changes, late feedback, or additional revisions.'
+        },
+        {
+          title: 'Revisions and feedback',
+          text: 'Your plan includes a defined number of revision rounds. We welcome clear, consolidated feedback. Additional or out-of-scope revisions may be billed separately.'
+        },
+        {
+          title: 'Payments and refunds',
+          text: 'Fees, payment schedules, and billing terms are specified in your plan or proposal. Work begins after payment confirmation. All payments are non-refundable once work has started or files have been delivered. If a project is canceled before work begins, any prepaid amount may be credited to future services at our discretion.'
+        },
+        {
+          title: 'Ownership and usage rights',
+          text: 'You retain ownership of your original footage. Upon full payment, you receive a license to use the final deliverables for your business and marketing. We may showcase completed work in our portfolio unless you request otherwise in writing.'
+        },
+        {
+          title: 'Client responsibilities',
+          text: 'You confirm you have the rights to all assets you provide. You are responsible for final approvals before publishing and for complying with platform rules (YouTube, Instagram, TikTok, etc.).'
+        },
+        {
+          title: 'Third-party tools',
+          text: 'We may use licensed software, stock media, or third-party services to produce your content. If a specific license is required for your use case, we will discuss it with you in advance.'
+        },
+        {
+          title: 'Limitation of liability',
+          text: 'Our liability is limited to the amount paid for the specific service in question. We are not responsible for indirect losses such as lost revenue, platform bans, or audience changes.'
+        },
+        {
+          title: 'Termination and changes',
+          text: 'Either party may end services with written notice. We may pause or terminate service for non-payment or misuse. We may update these terms from time to time, and the latest version will be posted here.'
         }
       ],
       contactEmail: 'asrvisualshelpline@gmail.com'
@@ -468,19 +574,35 @@ const contentBlocks = [
     key: 'page.cookies',
     data: {
       title: 'Cookie Policy',
-      description: 'This policy explains how we use cookies and similar technologies.',
+      description: 'This policy explains how we use cookies and similar technologies to provide a smooth, secure experience.',
       sections: [
         {
           title: 'What are cookies?',
-          text: 'Cookies are small files stored on your device that help websites function and improve user experience.'
+          text: 'Cookies are small text files stored on your device that help websites function and remember preferences.'
         },
         {
-          title: 'How we use cookies',
-          text: 'We use cookies for basic site functionality and analytics to understand page performance.'
+          title: 'Essential cookies',
+          text: 'These cookies help the site load properly, keep forms working, and provide core functionality.'
+        },
+        {
+          title: 'Analytics cookies',
+          text: 'We may use analytics tools to understand traffic and improve content performance. These cookies help us learn what pages are most helpful.'
+        },
+        {
+          title: 'Third-party cookies',
+          text: 'Some services we use (such as embedded video or scheduling tools) may set their own cookies. Their policies apply to their cookies.'
         },
         {
           title: 'Managing cookies',
-          text: 'You can control or delete cookies through your browser settings at any time.'
+          text: 'You can control or delete cookies through your browser settings at any time. Blocking cookies may affect some site features.'
+        },
+        {
+          title: 'Do Not Track',
+          text: 'Some browsers offer Do Not Track signals. At this time, our site does not respond to these signals in a standardized way.'
+        },
+        {
+          title: 'Updates to this policy',
+          text: 'We may update this policy as technology or regulations change. The latest version will always be posted here.'
         }
       ]
     }

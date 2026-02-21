@@ -5,7 +5,8 @@ import {
 	getAllBlogPosts,
 	createBlogPost,
 	updateBlogPost,
-	deleteBlogPost
+	deleteBlogPost,
+	generateBlogCoverImageController
 } from '../controllers/blogController'
 import { protect, authorize } from '../middleware/auth'
 
@@ -18,5 +19,8 @@ router.get('/admin', protect, authorize('admin'), getAllBlogPosts)
 router.post('/', protect, authorize('admin'), createBlogPost)
 router.put('/:id', protect, authorize('admin'), updateBlogPost)
 router.delete('/:id', protect, authorize('admin'), deleteBlogPost)
+
+// Image generation endpoint
+router.post('/generate-image', protect, authorize('admin'), generateBlogCoverImageController)
 
 export default router

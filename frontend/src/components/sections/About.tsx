@@ -20,8 +20,8 @@ const defaultAchievements = [
   ]
 
 const defaultStats = [
-  { value: '500+', label: 'Videos' },
-  { value: '100+', label: 'Creators' },
+  { value: '200+', label: 'Videos' },
+  { value: '50+', label: 'Creators' },
   { value: '50M+', label: 'Views' }
 ]
 
@@ -32,7 +32,7 @@ const defaultContent: AboutContent = {
   stats: defaultStats,
   ctaLabel: 'Learn More About Us',
   ctaHref: '/about',
-  videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
+  videoUrl: 'https://www.youtube.com/embed/OctCccn7XuY?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
 }
 
 const About = ({ content = defaultContent }: { content?: AboutContent }) => {

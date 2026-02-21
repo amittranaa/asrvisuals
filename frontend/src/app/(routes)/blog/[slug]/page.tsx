@@ -282,7 +282,8 @@ const getApiPost = async (slug: string) => {
       category: json.data.category || 'General',
       slug: json.data.slug,
       tags: json.data.tags || [],
-      content: json.data.content
+      content: json.data.content,
+      coverImage: json.data.coverImage || undefined
     }
   } catch {
     return null
@@ -320,9 +321,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   })
 
   const breadcrumbSchema = getBreadcrumbSchema([
-    { name: 'Home', url: 'https://asrvisuals.com' },
-    { name: 'Blog', url: 'https://asrvisuals.com/blog' },
-    { name: post.title, url: `https://asrvisuals.com/blog/${post.slug}` },
+    { name: 'Home', url: 'https://asrvisuals.live' },
+    { name: 'Blog', url: 'https://asrvisuals.live/blog' },
+    { name: post.title, url: `https://asrvisuals.live/blog/${post.slug}` },
   ])
 
   return (
@@ -346,6 +347,21 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               Back to Blog
             </Link>
           </div>
+
+          {/* Cover Image */}
+          {post.coverImage && (
+            <div className="relative w-full h-96 rounded-lg overflow-hidden mb-8 bg-bg-secondary">
+              <img 
+                src={post.coverImage} 
+                alt={post.title}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  // Hide if image fails to load
+                  (e.target as HTMLElement).style.display = 'none'
+                }}
+              />
+            </div>
+          )}
 
           {/* Header */}
           <header className="mb-8">
@@ -454,7 +470,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     }
   }
 
-  const baseUrl = 'https://asrvisuals.com'
+  const baseUrl = 'https://asrvisuals.live'
   const url = `${baseUrl}/blog/${params.slug}`
 
   return {

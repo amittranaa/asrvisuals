@@ -20,6 +20,17 @@ type PricingApiPlan = {
   active?: boolean
 }
 
+type PortfolioVideoItem = {
+  videoUrl?: string
+  mode?: 'auto' | 'manual'
+}
+
+type PortfolioVideosContent = {
+  videoMode?: 'auto' | 'manual'
+  maxResults?: number
+  items?: PortfolioVideoItem[]
+}
+
 const parsePrice = (value: string) => {
   const cleaned = value?.replace(/[^0-9.]/g, '')
   return cleaned ? Number(cleaned) : null
@@ -49,6 +60,11 @@ export default async function Home() {
   const servicesContent = await getContentBlock('home.services', null as any)
   const processContent = await getContentBlock('home.process', null as any)
   const portfolioContent = await getContentBlock('home.portfolio', null as any)
+  const portfolioVideos = await getContentBlock<PortfolioVideosContent>('portfolio.videos', {
+    videoMode: 'auto',
+    maxResults: 6,
+    items: []
+  })
   const pricingContent = await getContentBlock('home.pricing', null as any)
   const testimonialsContent = await getContentBlock('home.testimonials', null as any)
   const faqContent = await getContentBlock('home.faq', null as any)
@@ -71,6 +87,8 @@ export default async function Home() {
     ? { ...(pricingContent || {}), plans: pricingPlansNormalized }
     : pricingContent
 
+  const portfolioVideoOverrides = portfolioVideos?.items || []
+
   return (
     <>
       <Hero content={heroContent || undefined} />
@@ -78,7 +96,7 @@ export default async function Home() {
       <About content={aboutContent || undefined} />
       <Services content={servicesContent || undefined} />
       <Process content={processContent || undefined} />
-      <Portfolio content={portfolioContent || undefined} />
+      <Portfolio content={portfolioContent || undefined} videoOverrides={portfolioVideoOverrides} />
       <Pricing content={pricingMerged || undefined} />
       <Testimonials content={testimonialsContent || undefined} />
       <FAQ content={faqContent || undefined} />

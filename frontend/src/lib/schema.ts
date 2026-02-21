@@ -6,7 +6,7 @@ export const getBlogPostSchema = (post: {
   date: string
   slug: string
 }) => {
-  const baseUrl = 'https://asrvisuals.com'
+  const baseUrl = 'https://asrvisuals.live'
   const publishDate = new Date(post.date).toISOString()
 
   return {
@@ -38,7 +38,7 @@ export const getBlogPostSchema = (post: {
 }
 
 export const getBlogListSchema = () => {
-  const baseUrl = 'https://asrvisuals.com'
+  const baseUrl = 'https://asrvisuals.live'
 
   return {
     '@context': 'https://schema.org',
@@ -59,18 +59,18 @@ export const getOrganizationSchema = () => {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'ASR Visuals',
-    url: 'https://asrvisuals.com',
-    logo: 'https://asrvisuals.com/logo.png',
+    url: 'https://asrvisuals.live',
+    logo: 'https://asrvisuals.live/logo.png',
     description: 'Professional video editing and content creation services for creators and businesses',
     sameAs: [
       'https://www.youtube.com/@asrvisuals',
       'https://www.instagram.com/asrvisuals',
-      'https://www.twitter.com/asrvisuals',
+      'https://www.twitter.com/VisualsAsr83268',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'Customer Service',
-      email: 'contact@asrvisuals.com',
+      email: 'contact@asrvisuals.live',
       availableLanguage: ['en'],
     },
   }

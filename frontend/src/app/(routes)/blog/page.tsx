@@ -17,6 +17,7 @@ const allPosts = [
     category: 'Editing Tips',
     slug: 'editing-tricks-retention',
     tags: ['editing', 'retention', 'youtube', 'productivity'],
+    coverImage: undefined,
   },
   {
     title: 'The Ultimate YouTube SEO Guide for 2024',
@@ -27,6 +28,7 @@ const allPosts = [
     category: 'YouTube Growth',
     slug: 'youtube-seo-guide-2024',
     tags: ['seo', 'youtube', 'growth', 'optimization'],
+    coverImage: undefined,
   },
   {
     title: 'From 0 to 100K: A Creator\'s Journey',
@@ -37,6 +39,7 @@ const allPosts = [
     category: 'Success Stories',
     slug: 'zero-to-hundredk-journey',
     tags: ['case-study', 'growth', 'gaming', 'strategy'],
+    coverImage: undefined,
   },
   {
     title: 'How to Repurpose One Video Into 10 Content Pieces',
@@ -47,6 +50,7 @@ const allPosts = [
     category: 'Content Strategy',
     slug: 'repurpose-video-content',
     tags: ['repurposing', 'shorts', 'reels', 'content-strategy'],
+    coverImage: undefined,
   },
   {
     title: 'The Psychology of Hooks: Why First 3 Seconds Matter',
@@ -57,6 +61,7 @@ const allPosts = [
     category: 'Video Psychology',
     slug: 'psychology-hooks-first-seconds',
     tags: ['hooks', 'psychology', 'retention', 'creative'],
+    coverImage: undefined,
   },
   {
     title: 'Color Grading Trends 2024: From Cinematic to Viral',
@@ -67,6 +72,7 @@ const allPosts = [
     category: 'Visual Editing',
     slug: 'color-grading-trends-2024',
     tags: ['color-grading', 'trends', 'cinematography', 'aesthetics'],
+    coverImage: undefined,
   },
 ]
 
@@ -130,7 +136,8 @@ export default function BlogPage() {
             readTime: post.readTime || '5 min read',
             category: post.category || 'General',
             slug: post.slug,
-            tags: post.tags || []
+            tags: post.tags || [],
+            coverImage: post.coverImage || undefined
           }))
           setApiPosts(normalized)
         }
@@ -149,6 +156,8 @@ export default function BlogPage() {
         <div className="container-custom max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center"
           >
@@ -205,6 +214,21 @@ export default function BlogPage() {
                   viewport={{ once: true }}
                   className="group bg-bg-secondary border border-border-divider rounded-lg overflow-hidden hover:border-brand-red hover:shadow-red-glow transition-all duration-300"
                 >
+                  {/* Cover Image */}
+                  {post.coverImage && (
+                    <div className="relative w-full h-48 overflow-hidden bg-bg-primary">
+                      <img 
+                        src={post.coverImage} 
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          // Fallback if image fails to load
+                          (e.target as HTMLElement).style.display = 'none'
+                        }}
+                      />
+                    </div>
+                  )}
+
                   {/* Post Content */}
                   <div className="p-6">
                     <span className="inline-block px-3 py-1 rounded-lg bg-bg-primary border border-border-divider text-brand-red text-xs font-semibold mb-4">

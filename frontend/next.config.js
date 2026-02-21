@@ -2,8 +2,8 @@
 const nextConfig = {
   images: {
     domains: [
-      'asrvisuals.com',
-      'www.asrvisuals.com',
+      'asrvisuals.live',
+      'www.asrvisuals.live',
       'youtube.com',
       'www.youtube.com',
       'i.ytimg.com',

@@ -6,7 +6,17 @@ import Image from 'next/image'
 import Button from '@/components/ui/Button'
 import { PlayIcon } from '@heroicons/react/24/solid'
 
-const projects = [
+type PortfolioProject = {
+  title: string
+  creator: string
+  views: string
+  category: string
+  image: string
+  tags: string[]
+  videoUrl?: string
+}
+
+const projects: PortfolioProject[] = [
   {
     title: 'The Launch in Motion: Framer\'s Big Day',
     creator: 'Framer',
@@ -63,7 +73,11 @@ type PortfolioContent = {
   heading: string
   intro: string
   categories: string[]
-  projects: typeof projects
+  projects: PortfolioProject[]
+}
+
+type PortfolioVideoItem = {
+  videoUrl?: string
 }
 
 const defaultContent: PortfolioContent = {
@@ -73,16 +87,26 @@ const defaultContent: PortfolioContent = {
   projects
 }
 
-const Portfolio = ({ content = defaultContent }: { content?: PortfolioContent }) => {
+const Portfolio = ({
+  content = defaultContent,
+  videoOverrides
+}: {
+  content?: PortfolioContent
+  videoOverrides?: PortfolioVideoItem[]
+}) => {
   const [selectedCategory, setSelectedCategory] = useState(content.categories?.[0] || 'All')
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
 
   const activeProjects = content.projects?.length ? content.projects : defaultContent.projects
   const activeCategories = content.categories?.length ? content.categories : defaultContent.categories
+  const mergedProjects = activeProjects.map((project, index) => ({
+    ...project,
+    videoUrl: videoOverrides?.[index]?.videoUrl || project.videoUrl
+  }))
 
   const filteredProjects = selectedCategory === 'All' 
-    ? activeProjects 
-    : activeProjects.filter(p => p.category === selectedCategory)
+    ? mergedProjects 
+    : mergedProjects.filter(p => p.category === selectedCategory)
 
   return (
     <section id="portfolio" className="py-20 sm:py-24 bg-bg-secondary">
