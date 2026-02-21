@@ -26,10 +26,11 @@ export const createBooking = async (req: Request, res: Response) => {
       data: booking
     })
   } catch (error) {
+    const message = error instanceof Error ? error.message : 'Error creating booking'
     res.status(500).json({
       success: false,
       message: 'Error creating booking',
-      error: error.message
+      error: message
     })
   }
 }
@@ -53,10 +54,11 @@ export const getBookings = async (req: Request, res: Response) => {
       data: bookings
     })
   } catch (error) {
+    const message = error instanceof Error ? error.message : 'Error fetching bookings'
     res.status(500).json({
       success: false,
       message: 'Error fetching bookings',
-      error: error.message
+      error: message
     })
   }
 }
@@ -84,10 +86,11 @@ export const updateBooking = async (req: Request, res: Response) => {
       data: booking
     })
   } catch (error) {
+    const message = error instanceof Error ? error.message : 'Error updating booking'
     res.status(500).json({
       success: false,
       message: 'Error updating booking',
-      error: error.message
+      error: message
     })
   }
 }

@@ -20,6 +20,14 @@ type PortfolioVideosData = {
 const buildYoutubeEmbedUrl = (videoId: string) =>
   `https://www.youtube.com/embed/${videoId}?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3`
 
+type YoutubeSearchResponse = {
+  items?: Array<{
+    id?: {
+      videoId?: string
+    }
+  }>
+}
+
 const getLatestYoutubeVideoUrl = async (): Promise<string | null> => {
   const apiKey = process.env.YOUTUBE_API_KEY
   const channelId = process.env.YOUTUBE_CHANNEL_ID
@@ -41,7 +49,7 @@ const getLatestYoutubeVideoUrl = async (): Promise<string | null> => {
     if (!response.ok) {
       return null
     }
-    const data = await response.json()
+    const data = (await response.json()) as YoutubeSearchResponse
     const videoId = data?.items?.[0]?.id?.videoId
     if (!videoId) {
       return null
@@ -74,7 +82,7 @@ const getLatestYoutubeVideoUrls = async (maxResults: number): Promise<string[]> 
     if (!response.ok) {
       return []
     }
-    const data = await response.json()
+    const data = (await response.json()) as YoutubeSearchResponse
     const items = data?.items || []
     return items
       .map((item: any) => item?.id?.videoId)

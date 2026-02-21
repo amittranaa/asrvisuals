@@ -1,7 +1,26 @@
-import mongoose from 'mongoose'
+import mongoose, { Document } from 'mongoose'
 import bcrypt from 'bcryptjs'
 
-const userSchema = new mongoose.Schema({
+interface IUser extends Document {
+  name: string
+  email: string
+  password: string
+  role: 'admin' | 'user'
+  company?: string
+  website?: string
+  socialMedia?: {
+    youtube?: string
+    instagram?: string
+    tiktok?: string
+  }
+  bookings: mongoose.Types.ObjectId[]
+  resetPasswordToken?: string
+  resetPasswordExpire?: Date
+  emailVerified: boolean
+  comparePassword(candidatePassword: string): Promise<boolean>
+}
+
+const userSchema = new mongoose.Schema<IUser>({
   name: {
     type: String,
     required: true
@@ -53,8 +72,8 @@ userSchema.pre('save', async function(next) {
 })
 
 // Compare password method
-userSchema.methods.comparePassword = async function(candidatePassword: string) {
+userSchema.methods.comparePassword = async function(this: IUser, candidatePassword: string) {
   return await bcrypt.compare(candidatePassword, this.password)
 }
 
-export default mongoose.model('User', userSchema)
+export default mongoose.model<IUser>('User', userSchema)
