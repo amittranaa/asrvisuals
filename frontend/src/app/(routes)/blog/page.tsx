@@ -17,7 +17,7 @@ const allPosts = [
     category: 'Editing Tips',
     slug: 'editing-tricks-retention',
     tags: ['editing', 'retention', 'youtube', 'productivity'],
-    coverImage: undefined,
+    coverImage: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80',
   },
   {
     title: 'The Ultimate YouTube SEO Guide for 2024',
@@ -28,7 +28,7 @@ const allPosts = [
     category: 'YouTube Growth',
     slug: 'youtube-seo-guide-2024',
     tags: ['seo', 'youtube', 'growth', 'optimization'],
-    coverImage: undefined,
+    coverImage: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&auto=format&fit=crop&q=80',
   },
   {
     title: 'From 0 to 100K: A Creator\'s Journey',
@@ -39,7 +39,7 @@ const allPosts = [
     category: 'Success Stories',
     slug: 'zero-to-hundredk-journey',
     tags: ['case-study', 'growth', 'gaming', 'strategy'],
-    coverImage: undefined,
+    coverImage: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80',
   },
   {
     title: 'How to Repurpose One Video Into 10 Content Pieces',
@@ -50,7 +50,7 @@ const allPosts = [
     category: 'Content Strategy',
     slug: 'repurpose-video-content',
     tags: ['repurposing', 'shorts', 'reels', 'content-strategy'],
-    coverImage: undefined,
+    coverImage: 'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=800&auto=format&fit=crop&q=80',
   },
   {
     title: 'The Psychology of Hooks: Why First 3 Seconds Matter',
@@ -61,7 +61,7 @@ const allPosts = [
     category: 'Video Psychology',
     slug: 'psychology-hooks-first-seconds',
     tags: ['hooks', 'psychology', 'retention', 'creative'],
-    coverImage: undefined,
+    coverImage: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&auto=format&fit=crop&q=80',
   },
   {
     title: 'Color Grading Trends 2024: From Cinematic to Viral',
@@ -72,7 +72,7 @@ const allPosts = [
     category: 'Visual Editing',
     slug: 'color-grading-trends-2024',
     tags: ['color-grading', 'trends', 'cinematography', 'aesthetics'],
-    coverImage: undefined,
+    coverImage: 'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=800&auto=format&fit=crop&q=80',
   },
 ]
 
@@ -137,7 +137,7 @@ export default function BlogPage() {
             category: post.category || 'General',
             slug: post.slug,
             tags: post.tags || [],
-            coverImage: post.coverImage || undefined
+            coverImage: post.coverImage || post.image || undefined
           }))
           setApiPosts(normalized)
         }
@@ -258,7 +258,7 @@ export default function BlogPage() {
 
                     {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-4 pb-4 border-b border-border-divider">
-                      {post.tags.slice(0, 2).map(tag => (
+                      {(post.tags || []).slice(0, 2).map(tag => (
                         <span key={tag} className="text-xs px-2 py-1 bg-bg-primary text-text-secondary rounded">
                           #{tag}
                         </span>

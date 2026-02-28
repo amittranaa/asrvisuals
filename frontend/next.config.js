@@ -8,6 +8,7 @@ const nextConfig = {
       'www.youtube.com',
       'i.ytimg.com',
       'img.youtube.com',
+      'images.unsplash.com',
     ],
     unoptimized: process.env.NODE_ENV === 'development',
   },

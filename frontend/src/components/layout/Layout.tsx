@@ -20,7 +20,6 @@ const Footer = () => {
     resources: [
       { name: 'Blog', href: '/blog' },
       { name: 'FAQ', href: '/faq' },
-      { name: 'Pricing', href: '/pricing' },
       { name: 'Contact', href: '/contact' },
     ],
     legal: [
@@ -140,9 +139,18 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-border-divider flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-text-secondary text-sm">
-            © {currentYear} ASR Visuals. All rights reserved.
-          </p>
+          <div className="flex items-center gap-2">
+            <Image
+              src="/asr-logo.png"
+              alt="ASR Visuals"
+              width={20}
+              height={20}
+              className="rounded"
+            />
+            <p className="text-text-secondary text-sm">
+              © {currentYear} ASR Visuals. All rights reserved.
+            </p>
+          </div>
           <div className="flex gap-6">
             <Link href="/privacy" className="text-text-secondary hover:text-brand-red text-sm transition-colors">
               Privacy

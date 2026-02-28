@@ -42,7 +42,7 @@ const About = ({ content = defaultContent }: { content?: AboutContent }) => {
   return (
     <section id="about" className="py-20 sm:py-24 bg-bg-primary">
       <div className="container-custom">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 gap-10 lg:gap-12 items-center">
           {/* Left Column - Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -89,38 +89,6 @@ const About = ({ content = defaultContent }: { content?: AboutContent }) => {
             </Button>
           </motion.div>
 
-          {/* Right Column - Video Player */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            <div className="relative aspect-square rounded-lg overflow-hidden bg-bg-secondary border border-border-divider">
-              {/* Add your YouTube video URL here */}
-              <iframe
-                src={content.videoUrl}
-                title="About ASR Visuals"
-                className="absolute inset-0 w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-              
-              {/* Fallback placeholder if no video URL */}
-              {/* Uncomment below and remove iframe if you want a placeholder */}
-              {/* <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10">
-                <div className="text-center">
-                  <div className="w-20 h-20 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-10 h-10 text-accent" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                  </div>
-                  <p className="text-text-secondary">Video Coming Soon</p>
-                </div>
-              </div> */}
-            </div>
-          </motion.div>
         </div>
       </div>
     </section>

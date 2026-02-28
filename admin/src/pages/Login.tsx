@@ -27,7 +27,7 @@ const LoginPage = () => {
 
       setToken(data.token)
       setUser({ id: data.id, name: data.name, email: data.email, role: data.role })
-      navigate('/admin/pricing')
+      navigate('/admin/content')
     } catch (err: any) {
       setError(err?.response?.data?.message || 'Login failed')
     } finally {
@@ -39,7 +39,7 @@ const LoginPage = () => {
     <div className="auth-wrap">
       <div className="auth-card">
         <h1>Admin Sign In</h1>
-        <p>Access content, pricing, and operations updates.</p>
+        <p>Access content and operations updates.</p>
         <form onSubmit={handleSubmit} className="grid">
           <div className="grid">
             <label>Email</label>

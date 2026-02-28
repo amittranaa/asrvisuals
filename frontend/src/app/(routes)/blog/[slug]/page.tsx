@@ -12,6 +12,7 @@ const blogPosts: Record<string, any> = {
     category: 'Editing Tips',
     slug: 'editing-tricks-retention',
     tags: ['editing', 'retention', 'youtube', 'productivity'],
+    coverImage: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80',
     content: `
     <h2>Master These 10 Editing Techniques to Maximize Viewer Retention</h2>
     <p>Retention is the single most important metric on YouTube. It determines your watch time, engagement, and ultimately your channel growth. In this comprehensive guide, we'll break down 10 proven editing techniques that top creators use to keep viewers glued to their screens.</p>
@@ -61,6 +62,7 @@ const blogPosts: Record<string, any> = {
     category: 'YouTube Growth',
     slug: 'youtube-seo-guide-2024',
     tags: ['seo', 'youtube', 'growth', 'optimization'],
+    coverImage: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&auto=format&fit=crop&q=80',
     content: `
     <h2>Complete YouTube SEO Strategy for 2024</h2>
     <p>YouTube is the second largest search engine after Google. If you're not optimizing for search, you're leaving views on the table. This data-driven guide covers everything you need to know about YouTube SEO.</p>
@@ -98,6 +100,7 @@ const blogPosts: Record<string, any> = {
     category: 'Success Stories',
     slug: 'zero-to-hundredk-journey',
     tags: ['case-study', 'growth', 'gaming', 'strategy'],
+    coverImage: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80',
     content: `
     <h2>How a Gaming Channel Reached 100K Subscribers in 6 Months</h2>
     <p>When Jake started his gaming channel, he had no audience, no experience with editing, and no budget. Six months later, he hit 100K subscribers. Here's exactly what we did.</p>
@@ -140,6 +143,7 @@ const blogPosts: Record<string, any> = {
     category: 'Content Strategy',
     slug: 'repurpose-video-content',
     tags: ['repurposing', 'shorts', 'reels', 'content-strategy'],
+    coverImage: 'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=800&auto=format&fit=crop&q=80',
     content: `
     <h2>Maximize ROI: Turn Every Video Into 10+ Assets</h2>
     <p>You spent hours creating one video. Why limit its reach to one platform? Here's our process for extracting 10+ pieces of content from a single video.</p>
@@ -181,6 +185,7 @@ const blogPosts: Record<string, any> = {
     category: 'Video Psychology',
     slug: 'psychology-hooks-first-seconds',
     tags: ['hooks', 'psychology', 'retention', 'creative'],
+    coverImage: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&auto=format&fit=crop&q=80',
     content: `
     <h2>Master the Hook: Stop the Scroll in 3 Seconds</h2>
     <p>Studies show 70% of viewers drop off in the first 3 seconds. Your hook determines if someone watches 1 minute or 10 minutes. Here's the psychology behind what works.</p>
@@ -218,6 +223,7 @@ const blogPosts: Record<string, any> = {
     category: 'Visual Editing',
     slug: 'color-grading-trends-2024',
     tags: ['color-grading', 'trends', 'cinematography', 'aesthetics'],
+    coverImage: 'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=800&auto=format&fit=crop&q=80',
     content: `
     <h2>2024 Color Grading Trends: What's Hot Right Now</h2>
     <p>Color grading has evolved beyond just correcting footage. It's now about creating a signature aesthetic that makes your content recognizable.</p>
@@ -283,7 +289,8 @@ const getApiPost = async (slug: string) => {
       slug: json.data.slug,
       tags: json.data.tags || [],
       content: json.data.content,
-      coverImage: json.data.coverImage || undefined
+      seoDescription: json.data.seoDescription || '',
+      coverImage: json.data.coverImage || json.data.image || undefined
     }
   } catch {
     return null
@@ -390,13 +397,13 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           {/* Content */}
           <div
             className="max-w-none mb-12 prose-light"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: post.content || '' }}
           />
 
           {/* Tags */}
           <div className="border-t border-border-divider pt-8 mb-8">
             <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag: string) => (
+              {(post.tags || []).map((tag: string) => (
                 <span key={tag} className="inline-block px-3 py-1 rounded-lg bg-bg-secondary border border-border-divider text-text-secondary text-xs">
                   #{tag}
                 </span>
@@ -461,7 +468,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     },
   }
 
-  const post = blogPosts[params.slug]
+  const apiPost = await getApiPost(params.slug)
+  const post = apiPost || blogPosts[params.slug]
 
   if (!post) {
     return {
@@ -472,13 +480,14 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   const baseUrl = 'https://asrvisuals.live'
   const url = `${baseUrl}/blog/${params.slug}`
+  const description = post.seoDescription || (post.content ? post.content.replace(/<[^>]+>/g, '').slice(0, 160) : '')
 
   return {
     title: post.title,
-    description: post.seoDescription,
+    description,
     openGraph: {
       title: post.title,
-      description: post.seoDescription,
+      description,
       url: url,
       type: 'article',
       siteName: 'ASR Visuals',
@@ -486,7 +495,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     twitter: {
       card: 'summary_large_image',
       title: post.title,
-      description: post.seoDescription,
+      description,
     },
     alternates: {
       canonical: url,

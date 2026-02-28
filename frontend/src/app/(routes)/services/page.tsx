@@ -32,8 +32,8 @@ const defaultContent: ServicesPageContent = {
       text: 'Turn one video into a content system across multiple platforms.'
     }
   ],
-  primaryCtaLabel: 'View pricing',
-  primaryCtaHref: '/pricing',
+  primaryCtaLabel: 'Book a call',
+  primaryCtaHref: 'https://cal.com/asrvisuals',
   secondaryCtaLabel: 'Contact us',
   secondaryCtaHref: '/contact'
 }

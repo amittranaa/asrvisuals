@@ -1,12 +1,12 @@
 import { NavLink } from 'react-router-dom'
 
 const links = [
-  { to: '/admin/pricing', label: 'Pricing' },
-  { to: '/admin/blog', label: 'Blog' },
-  { to: '/admin/content', label: 'Content Blocks' },
-  { to: '/admin/contacts', label: 'Contacts' },
-  { to: '/admin/bookings', label: 'Bookings' },
-  { to: '/admin/users', label: 'Users' }
+  { to: '/admin/pages', label: '📄 Pages' },
+  { to: '/admin/blog', label: '📝 Blog' },
+  { to: '/admin/content', label: '🧩 Content Blocks' },
+  { to: '/admin/contacts', label: '📧 Contacts' },
+  { to: '/admin/bookings', label: '📅 Bookings' },
+  { to: '/admin/users', label: '👥 Users' }
 ]
 
 const Sidebar = () => {

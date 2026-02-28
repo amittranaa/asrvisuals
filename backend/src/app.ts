@@ -4,6 +4,7 @@ import helmet from 'helmet'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
 import connectDB from './config/database'
+import ensureDefaultAdmin from './utils/ensureDefaultAdmin'
 
 // Import routes
 import authRoutes from './routes/authRoutes'
@@ -11,9 +12,9 @@ import bookingRoutes from './routes/bookingRoutes'
 import paymentRoutes from './routes/paymentRoutes'
 import contactRoutes from './routes/contactRoutes'
 import blogRoutes from './routes/blogRoutes'
-import pricingRoutes from './routes/pricingRoutes'
 import contentRoutes from './routes/contentRoutes'
 import userRoutes from './routes/userRoutes'
+import pageRoutes from './routes/pageRoutes'
 
 dotenv.config()
 
@@ -21,8 +22,8 @@ const app = express()
 
 app.set('trust proxy', 1)
 
-// Connect to MongoDB
-connectDB()
+// Connect to MongoDB and ensure default admin exists
+connectDB().then(() => ensureDefaultAdmin())
 
 // Middleware
 app.use(helmet({
@@ -65,9 +66,9 @@ app.use('/api/bookings', bookingRoutes)
 app.use('/api/payments', paymentRoutes)
 app.use('/api/contact', contactRoutes)
 app.use('/api/blog', blogRoutes)
-app.use('/api/pricing', pricingRoutes)
 app.use('/api/content', contentRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/pages', pageRoutes)
 
 // Health check
 app.get('/health', (req, res) => {

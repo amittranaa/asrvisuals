@@ -36,7 +36,7 @@ const contentBlocks = [
       ctaLabel: 'Learn More About Us',
       ctaHref: '/about',
       videoMode: 'auto',
-      videoUrl: 'https://www.youtube.com/embed/OctCccn7XuY?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
+        videoUrl: 'https://youtube.com/shorts/OctCccn7XuY?feature=share'
     }
   },
   {
@@ -103,55 +103,51 @@ const contentBlocks = [
     data: {
       heading: 'Our Best Work',
       intro: "From tech reviews to gameplay breakdowns -- here's a glimpse of how we turn raw footage into binge-worthy content that resonates.",
-      categories: ['All', 'Tech Review', 'Tutorial', 'Travel', 'Gaming'],
+      categories: ['All', 'Shorts Editing', 'Shorts Creative', 'Shorts Motion', 'Shorts Viral', 'Coming Soon'],
       projects: [
         {
-          title: "The Launch in Motion: Framer's Big Day",
-          creator: 'Framer',
-          views: '2M Views',
-          category: 'Tech Review',
+          title: 'Shorts Highlight 1',
+          creator: 'ASR Visuals',
+          views: 'YouTube Shorts',
+          category: 'Shorts Editing',
           image: '/images/project-1.jpg',
-          tags: ['Cinematic', 'Product Launch']
+          tags: ['Shorts', 'Editing'],
+          videoUrl: 'https://www.youtube.com/embed/Q9keCbxEJaw?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
         },
         {
-          title: 'Master Framer Fast: Core Concepts',
-          creator: 'GeorgeTech',
-          views: '1.2M Views',
-          category: 'Tutorial',
+          title: 'Shorts Highlight 2',
+          creator: 'ASR Visuals',
+          views: 'YouTube Shorts',
+          category: 'Shorts Creative',
           image: '/images/project-2.jpg',
-          tags: ['Educational', 'Tutorial']
+          tags: ['Shorts', 'Creative'],
+          videoUrl: 'https://www.youtube.com/embed/3prJcIMLrsQ?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
         },
         {
-          title: 'Meet the Creator Micro 2',
-          creator: 'Smith Will',
-          views: '4.2M Views',
-          category: 'Product Review',
+          title: 'Shorts Highlight 3',
+          creator: 'ASR Visuals',
+          views: 'YouTube Shorts',
+          category: 'Shorts Motion',
           image: '/images/project-3.jpg',
-          tags: ['Review', 'Tech']
+          tags: ['Shorts', 'Motion'],
+          videoUrl: 'https://www.youtube.com/embed/JUBTiJXWPNc?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
         },
         {
-          title: 'Ultimate Editing Workflow',
-          creator: 'EditMaster',
-          views: '890K Views',
-          category: 'Tutorial',
+          title: 'Shorts Highlight 4',
+          creator: 'ASR Visuals',
+          views: 'YouTube Shorts',
+          category: 'Shorts Viral',
           image: '/images/project-4.jpg',
-          tags: ['Editing', 'Workflow']
+          tags: ['Shorts', 'Viral'],
+          videoUrl: 'https://www.youtube.com/embed/OctCccn7XuY?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
         },
         {
-          title: 'Cinematic Travel Compilation',
-          creator: 'Wanderlust',
-          views: '3.1M Views',
-          category: 'Travel',
+          title: 'Coming Soon',
+          creator: 'ASR Visuals',
+          views: 'New drops soon',
+          category: 'Coming Soon',
           image: '/images/project-5.jpg',
-          tags: ['Cinematic', 'Travel']
-        },
-        {
-          title: 'Gaming Highlights 2024',
-          creator: 'GamePro',
-          views: '5.7M Views',
-          category: 'Gaming',
-          image: '/images/project-6.jpg',
-          tags: ['Gaming', 'Highlights']
+          tags: ['Upcoming', 'Stay Tuned']
         }
       ]
     }
@@ -160,29 +156,25 @@ const contentBlocks = [
     key: 'portfolio.videos',
     data: {
       videoMode: 'manual',
-      maxResults: 3,
+      maxResults: 4,
       items: [
         {
           mode: 'manual',
+          videoUrl: 'https://www.youtube.com/embed/Q9keCbxEJaw?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
+        },
+        {
+          mode: 'manual',
+          videoUrl: 'https://www.youtube.com/embed/3prJcIMLrsQ?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
+        },
+        {
+          mode: 'manual',
+          videoUrl: 'https://www.youtube.com/embed/JUBTiJXWPNc?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
+        },
+        {
+          mode: 'manual',
           videoUrl: 'https://www.youtube.com/embed/OctCccn7XuY?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
-        },
-        {
-          mode: 'manual',
-          videoUrl: ''
-        },
-        {
-          mode: 'manual',
-          videoUrl: ''
         }
       ]
-    }
-  },
-  {
-    key: 'home.pricing',
-    data: {
-      heading: 'Simple Plans',
-      intro: "Whether you're uploading weekly or scaling fast, we've got a plan tailored to your content flow.",
-      plans: []
     }
   },
   {
@@ -344,8 +336,8 @@ const contentBlocks = [
           text: 'Turn one video into a content system across multiple platforms.'
         }
       ],
-      primaryCtaLabel: 'View pricing',
-      primaryCtaHref: '/pricing',
+      primaryCtaLabel: 'Contact us',
+      primaryCtaHref: '/contact',
       secondaryCtaLabel: 'Contact us',
       secondaryCtaHref: '/contact'
     }
@@ -374,17 +366,6 @@ const contentBlocks = [
       description: 'Explore our portfolio of stunning video edits that have helped creators and brands achieve millions of views and engage their audiences.',
       categories: ['All', 'Long-form Edit', 'Short-form Content', 'Documentary Style', 'Educational Content', 'Paid Advertising', 'Event Coverage'],
       projects: []
-    }
-  },
-  {
-    key: 'page.pricing',
-    data: {
-      title: 'Pricing',
-      description: 'Simple plans for consistent content production. Custom options available for teams with unique needs.',
-      primaryCtaLabel: 'Book a call',
-      primaryCtaHref: 'https://cal.com/asrvisuals',
-      secondaryCtaLabel: 'Get a custom plan',
-      secondaryCtaHref: '/contact'
     }
   },
   {
@@ -463,6 +444,33 @@ const contentBlocks = [
       highlight: 'Creation',
       description: 'Learn professional video editing, YouTube growth strategies, content creation techniques, and creator psychology from industry experts.',
       posts: []
+    }
+  },
+  {
+    key: 'page.ai-gallery',
+    data: {
+      title: 'AI Gallery',
+      description: 'A curated gallery of AI-assisted visual concepts and covers crafted for content creators.',
+      items: [
+        {
+          imageUrl: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80',
+          title: 'Cinematic Depth',
+          prompt: 'Moody cinematic landscape with dramatic lighting',
+          tag: 'Concept'
+        },
+        {
+          imageUrl: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80',
+          title: 'Creator Workspace',
+          prompt: 'Modern creator desk with neon accents and bokeh',
+          tag: 'Cover'
+        },
+        {
+          imageUrl: 'https://images.unsplash.com/photo-1471879832106-c7ab9e0cee23?auto=format&fit=crop&w=1200&q=80',
+          title: 'Future Signal',
+          prompt: 'Futuristic abstract gradient with soft particles',
+          tag: 'Thumbnail'
+        }
+      ]
     }
   },
   {

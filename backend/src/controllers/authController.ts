@@ -49,6 +49,7 @@ export const setupAdmin = async (req: Request, res: Response) => {
 			}
 		})
 	} catch (error) {
+		console.error('Setup admin failed:', error)
 		res.status(500).json({
 			success: false,
 			message: 'Error setting up admin'

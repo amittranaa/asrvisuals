@@ -15,7 +15,7 @@ const posts = [
     date: 'Mar 15, 2024',
     readTime: '5 min read',
     category: 'Editing Tips',
-    image: '/images/blog-1.jpg',
+    image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80',
     slug: 'editing-tricks-retention',
     tags: ['editing', 'retention', 'youtube', 'productivity'],
     seoDescription: 'Master 10 advanced video editing techniques to increase viewer retention. Learn jump cuts, transitions, and pacing strategies used by top YouTube creators.'
@@ -28,7 +28,7 @@ const posts = [
     date: 'Mar 12, 2024',
     readTime: '8 min read',
     category: 'YouTube Growth',
-    image: '/images/blog-2.jpg',
+    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&auto=format&fit=crop&q=80',
     slug: 'youtube-seo-guide-2024',
     tags: ['seo', 'youtube', 'growth', 'optimization'],
     seoDescription: 'Complete YouTube SEO guide 2024: Learn keyword research, title optimization, and ranking strategies to grow your channel by 300%.'
@@ -41,7 +41,7 @@ const posts = [
     date: 'Mar 10, 2024',
     readTime: '6 min read',
     category: 'Success Stories',
-    image: '/images/blog-3.jpg',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80',
     slug: 'zero-to-hundredk-journey',
     tags: ['case-study', 'growth', 'gaming', 'strategy'],
     seoDescription: 'See how a gaming channel grew from 0 to 100K subscribers in 6 months with professional video editing and strategic content planning.'
@@ -54,7 +54,7 @@ const posts = [
     date: 'Mar 8, 2024',
     readTime: '7 min read',
     category: 'Content Strategy',
-    image: '/images/blog-4.jpg',
+    image: 'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=800&auto=format&fit=crop&q=80',
     slug: 'repurpose-video-content',
     tags: ['repurposing', 'shorts', 'reels', 'content-strategy'],
     seoDescription: 'Learn how to repurpose one long-form video into 10+ Shorts, Reels, and quotes cards for maximum reach and engagement.'
@@ -67,7 +67,7 @@ const posts = [
     date: 'Mar 5, 2024',
     readTime: '6 min read',
     category: 'Video Psychology',
-    image: '/images/blog-5.jpg',
+    image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&auto=format&fit=crop&q=80',
     slug: 'psychology-hooks-first-seconds',
     tags: ['hooks', 'psychology', 'retention', 'creative'],
     seoDescription: 'Master video hooks using psychology principles. Learn why the first 3 seconds matter and how to stop viewers from scrolling.'
@@ -80,7 +80,7 @@ const posts = [
     date: 'Mar 3, 2024',
     readTime: '5 min read',
     category: 'Visual Editing',
-    image: '/images/blog-6.jpg',
+    image: 'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=800&auto=format&fit=crop&q=80',
     slug: 'color-grading-trends-2024',
     tags: ['color-grading', 'trends', 'cinematography', 'aesthetics'],
     seoDescription: 'Latest color grading trends 2024: Cinematic techniques, viral aesthetics, and LUT recommendations for professional video editing.'
@@ -100,7 +100,7 @@ const defaultContent: BlogContent = {
 }
 
 const Blog = ({ content = defaultContent }: { content?: BlogContent }) => {
-  const items = content.posts.length ? content.posts : defaultContent.posts
+  const items = content?.posts?.length ? content.posts : defaultContent.posts
 
   return (
     <section id="blog" className="py-20 sm:py-24 bg-bg-primary">
@@ -114,9 +114,9 @@ const Blog = ({ content = defaultContent }: { content?: BlogContent }) => {
           className="text-center mb-12"
         >
           <span className="section-tag">Blog</span>
-          <h2 className="mb-4">{content.heading}</h2>
+          <h2 className="mb-4">{content?.heading || defaultContent.heading}</h2>
           <p className="text-text-secondary max-w-2xl mx-auto">
-            {content.intro}
+            {content?.intro || defaultContent.intro}
           </p>
         </motion.div>
 
@@ -135,10 +135,12 @@ const Blog = ({ content = defaultContent }: { content?: BlogContent }) => {
             >
               {/* Image */}
               <Link href={`/blog/${post.slug}`} className="block relative aspect-video overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-brand-red/20 to-bg-secondary">
-                  <div className="absolute inset-0 bg-text-primary/35 group-hover:bg-text-primary/20 transition-colors duration-300" />
-                </div>
-                <div className="absolute top-4 left-4">
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute top-4 left-4 z-10">
                   <span className="bg-brand-red text-text-primary px-3 py-1 rounded-lg text-xs font-semibold">
                     {post.category}
                   </span>

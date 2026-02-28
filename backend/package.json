@@ -9,7 +9,7 @@
     "start": "node dist/app.js",
     "lint": "eslint . --ext .ts",
     "seed:content": "ts-node src/scripts/seedContentBlocks.ts",
-    "seed:pricing": "ts-node src/scripts/seedPricingPlans.ts"
+    "update:portfolio": "ts-node src/scripts/updatePortfolioContent.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

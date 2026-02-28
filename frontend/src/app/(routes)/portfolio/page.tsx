@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Play, Eye } from 'lucide-react'
+import { Eye } from 'lucide-react'
 import { useContentBlock } from '@/lib/useContentBlock'
 
 type PortfolioProject = {
@@ -74,6 +74,12 @@ const portfolioProjects: PortfolioProject[] = [
 ]
 
 const categories = ['All', 'Long-form Edit', 'Short-form Content', 'Documentary Style', 'Educational Content', 'Paid Advertising', 'Event Coverage']
+const defaultHomeVideoUrls = [
+  'https://www.youtube.com/embed/uKAzMUHWgOE?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3',
+  'https://www.youtube.com/embed/Q9keCbxEJaw?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3',
+  'https://www.youtube.com/embed/JUBTiJXWPNc?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3',
+  'https://www.youtube.com/embed/xrYzCAVuGV0?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
+]
 
 type PortfolioPageContent = {
   title: string
@@ -115,12 +121,16 @@ export default function PortfolioPage() {
   const videoOverrides = videoContent.items || []
   const projectsWithVideos = activeProjects.map((project, index) => ({
     ...project,
-    videoUrl: videoOverrides[index]?.videoUrl || project.videoUrl
+    videoUrl: videoOverrides[index]?.videoUrl || project.videoUrl || defaultHomeVideoUrls[index]
   }))
 
+  const availableProjects = projectsWithVideos.filter(
+    (project): project is PortfolioProject & { videoUrl: string } => Boolean(project.videoUrl)
+  )
+
   const filteredProjects = selectedCategory === 'All' 
-    ? projectsWithVideos 
-    : projectsWithVideos.filter(p => p.category === selectedCategory)
+    ? availableProjects
+    : availableProjects.filter(p => p.category === selectedCategory)
 
   return (
     <div className="min-h-screen bg-bg-secondary py-24">
@@ -185,22 +195,13 @@ export default function PortfolioPage() {
             >
               {/* Video Thumbnail */}
               <div className="relative aspect-video bg-gradient-to-br from-brand-red/20 to-brand-red/5 overflow-hidden">
-                {project.videoUrl ? (
-                  <iframe
-                    src={project.videoUrl}
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <div className="text-center">
-                      <Play className="w-16 h-16 text-brand-red mx-auto mb-2 group-hover:scale-110 transition-transform" />
-                      <p className="text-text-secondary text-sm">Video Coming Soon</p>
-                    </div>
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <iframe
+                  src={project.videoUrl}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
 
               {/* Project Info */}

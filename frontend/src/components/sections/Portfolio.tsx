@@ -2,14 +2,11 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
 import Button from '@/components/ui/Button'
-import { PlayIcon } from '@heroicons/react/24/solid'
 
 type PortfolioProject = {
   title: string
   creator: string
-  views: string
   category: string
   image: string
   tags: string[]
@@ -18,56 +15,40 @@ type PortfolioProject = {
 
 const projects: PortfolioProject[] = [
   {
-    title: 'The Launch in Motion: Framer\'s Big Day',
-    creator: 'Framer',
-    views: '2M Views',
-    category: 'Tech Review',
-    image: '/images/project-1.jpg',
-    tags: ['Cinematic', 'Product Launch']
-  },
-  {
-    title: 'Master Framer Fast: Core Concepts',
+    title: 'Fast: Core Concepts',
     creator: 'GeorgeTech',
-    views: '1.2M Views',
     category: 'Tutorial',
     image: '/images/project-2.jpg',
-    tags: ['Educational', 'Tutorial']
+    tags: ['Educational', 'Tutorial'],
+    videoUrl: 'https://www.youtube.com/embed/uKAzMUHWgOE?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
   },
   {
     title: 'Meet the Creator Micro 2',
     creator: 'Smith Will',
-    views: '4.2M Views',
-    category: 'Product Review',
+    category: 'Tech Review',
     image: '/images/project-3.jpg',
-    tags: ['Review', 'Tech']
+    tags: ['Review', 'Tech'],
+    videoUrl: 'https://www.youtube.com/embed/Q9keCbxEJaw?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
   },
   {
     title: 'Ultimate Editing Workflow',
     creator: 'EditMaster',
-    views: '890K Views',
     category: 'Tutorial',
     image: '/images/project-4.jpg',
-    tags: ['Editing', 'Workflow']
+    tags: ['Editing', 'Workflow'],
+    videoUrl: 'https://www.youtube.com/embed/JUBTiJXWPNc?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
   },
   {
     title: 'Cinematic Travel Compilation',
     creator: 'Wanderlust',
-    views: '3.1M Views',
     category: 'Travel',
     image: '/images/project-5.jpg',
-    tags: ['Cinematic', 'Travel']
-  },
-  {
-    title: 'Gaming Highlights 2024',
-    creator: 'GamePro',
-    views: '5.7M Views',
-    category: 'Gaming',
-    image: '/images/project-6.jpg',
-    tags: ['Gaming', 'Highlights']
+    tags: ['Cinematic', 'Travel'],
+    videoUrl: 'https://www.youtube.com/embed/xrYzCAVuGV0?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
   }
 ]
 
-const categories = ['All', 'Tech Review', 'Tutorial', 'Travel', 'Gaming']
+const categories = ['All', 'Tech Review', 'Tutorial', 'Travel']
 
 type PortfolioContent = {
   heading: string
@@ -95,18 +76,34 @@ const Portfolio = ({
   videoOverrides?: PortfolioVideoItem[]
 }) => {
   const [selectedCategory, setSelectedCategory] = useState(content.categories?.[0] || 'All')
-  const [hoveredProject, setHoveredProject] = useState<number | null>(null)
 
   const activeProjects = content.projects?.length ? content.projects : defaultContent.projects
   const activeCategories = content.categories?.length ? content.categories : defaultContent.categories
-  const mergedProjects = activeProjects.map((project, index) => ({
+  const mappedProjects = activeProjects.map((project, index) => ({
     ...project,
     videoUrl: videoOverrides?.[index]?.videoUrl || project.videoUrl
   }))
 
+  const extraVideoProjects = (videoOverrides || [])
+    .slice(activeProjects.length)
+    .filter(item => item.videoUrl)
+    .map((item, index) => ({
+      title: `Featured Video ${activeProjects.length + index + 1}`,
+      creator: 'CreatorFlow',
+      category: 'Tutorial',
+      image: '/images/project-2.jpg',
+      tags: ['Featured'],
+      videoUrl: item.videoUrl
+    }))
+
+  const mergedProjects = [...mappedProjects, ...extraVideoProjects]
+  const videoProjects = mergedProjects.filter(
+    (project): project is PortfolioProject & { videoUrl: string } => Boolean(project.videoUrl)
+  )
+
   const filteredProjects = selectedCategory === 'All' 
-    ? mergedProjects 
-    : mergedProjects.filter(p => p.category === selectedCategory)
+    ? videoProjects 
+    : videoProjects.filter(p => p.category === selectedCategory)
 
   return (
     <section id="portfolio" className="py-20 sm:py-24 bg-bg-secondary">
@@ -154,49 +151,29 @@ const Portfolio = ({
           <AnimatePresence mode="wait">
             {filteredProjects.map((project, index) => (
               <motion.div
-                key={project.title}
+                key={`${project.title}-${index}`}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 layout
-                onHoverStart={() => setHoveredProject(index)}
-                onHoverEnd={() => setHoveredProject(null)}
                 className="group cursor-pointer"
               >
                 <div className="relative aspect-video rounded-2xl overflow-hidden mb-4">
-                  {/* Thumbnail Placeholder */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-brand-red/20 to-bg-secondary">
-                    <div className="absolute inset-0 bg-text-primary/35 group-hover:bg-text-primary/20 transition-colors duration-300" />
-                  </div>
-
-                  {/* Play Button Overlay */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ 
-                      opacity: hoveredProject === index ? 1 : 0,
-                      scale: hoveredProject === index ? 1 : 0.5
-                    }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0 flex items-center justify-center"
-                  >
-                    <div className="w-16 h-16 bg-brand-red rounded-lg flex items-center justify-center">
-                      <PlayIcon className="w-8 h-8 text-text-primary ml-1" />
-                    </div>
-                  </motion.div>
+                  <iframe
+                    src={project.videoUrl}
+                    className="absolute inset-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
 
                   {/* Creator Tag */}
-                  <div className="absolute top-4 left-4 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-lg text-sm text-text-primary">
+                  <div className="pointer-events-none absolute top-4 left-4 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-lg text-sm text-text-primary">
                     {project.creator}
                   </div>
 
-                  {/* Views Tag */}
-                  <div className="absolute top-4 right-4 bg-brand-red text-text-primary px-3 py-1 rounded-lg text-sm font-semibold">
-                    {project.views}
-                  </div>
-
                   {/* Tags */}
-                  <div className="absolute bottom-4 left-4 flex gap-2">
+                  <div className="pointer-events-none absolute bottom-4 left-4 flex gap-2">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}

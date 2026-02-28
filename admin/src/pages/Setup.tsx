@@ -26,7 +26,7 @@ const SetupPage = () => {
       const { data } = response.data
       setToken(data.token)
       setUser({ id: data.id, name: data.name, email: data.email, role: data.role })
-      navigate('/admin/pricing')
+      navigate('/admin/content')
     } catch (err: any) {
       setError(err?.response?.data?.message || 'Setup failed')
     } finally {
