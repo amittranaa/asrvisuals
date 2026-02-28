@@ -38,10 +38,6 @@ const nextConfig = {
             value: 'max-age=63072000; includeSubDomains; preload'
           },
           {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN'
-          },
-          {
             key: 'X-Content-Type-Options',
             value: 'nosniff'
           },
@@ -71,7 +67,7 @@ const nextConfig = {
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
-              "frame-ancestors 'self'",
+              "frame-ancestors 'self' http://localhost:5173 https://admin-six-steel.vercel.app",
               "upgrade-insecure-requests"
             ].join('; ')
           }
